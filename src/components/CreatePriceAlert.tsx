@@ -14,7 +14,36 @@ const CreatePriceAlert: React.FC = () => {
   const [alertPrice, setAlertPrice] = useState('112500.00');
   const [selectedPercentage, setSelectedPercentage] = useState<string | null>(null);
   const [isCustomPercentage, setIsCustomPercentage] = useState(false);
+  const [selectedCrypto, setSelectedCrypto] = useState('BTC');
+  const [alertName, setAlertName] = useState('Bitcoin');
+  const [isAlertNameModalOpen, setIsAlertNameModalOpen] = useState(false);
+  const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
+  const [isFrequencyModalOpen, setIsFrequencyModalOpen] = useState(false);
+  const [isToneModalOpen, setIsToneModalOpen] = useState(false);
+  const [isPercentModalOpen, setIsPercentModalOpen] = useState(false);
+  const [isFiatCurrencyModalOpen, setIsFiatCurrencyModalOpen] = useState(false);
+  const [isCryptocurrencyModalOpen, setIsCryptocurrencyModalOpen] = useState(false);
   
+  // Fiat currency setting - defaults to USD
+  const [selectedFiatCurrency, setSelectedFiatCurrency] = useState('USD');
+  
+  // Price data from API
+  const [currentPriceData, setCurrentPriceData] = useState<CryptoPriceData | null>(null);
+  const [isPriceLoading, setIsPriceLoading] = useState(false);
+  const [priceError, setPriceError] = useState<string | null>(null);
+  
+  // Notification settings - all off by default
+  const [pushNotifications, setPushNotifications] = useState(false);
+  const [emailNotifications, setEmailNotifications] = useState(false);
+  const [smsNotifications, setSmsNotifications] = useState(false);
+  
+  // Frequency setting - no default selection
+  const [frequency, setFrequency] = useState<'once' | 'recurring' | null>(null);
+  
+  // Tone setting - no default selection
+  const [customTone, setCustomTone] = useState<string | null>(null);
+  
+  // Computed values (after state declarations)
   const basePrice = currentPriceData?.currentPrice || 112500;
   
   const calculatePercentageDifference = (currentValue: string): string => {
@@ -45,35 +74,7 @@ const CreatePriceAlert: React.FC = () => {
     if (length <= 18) return 'text-sm'; // 14px
     return 'text-xs'; // 12px
   };
-  const [selectedCrypto, setSelectedCrypto] = useState('BTC');
-  const [alertName, setAlertName] = useState('Bitcoin');
-  const [isAlertNameModalOpen, setIsAlertNameModalOpen] = useState(false);
-  const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
-  const [isFrequencyModalOpen, setIsFrequencyModalOpen] = useState(false);
-  const [isToneModalOpen, setIsToneModalOpen] = useState(false);
-  const [isPercentModalOpen, setIsPercentModalOpen] = useState(false);
-  const [isFiatCurrencyModalOpen, setIsFiatCurrencyModalOpen] = useState(false);
-  const [isCryptocurrencyModalOpen, setIsCryptocurrencyModalOpen] = useState(false);
-  
-  // Fiat currency setting - defaults to USD
-  const [selectedFiatCurrency, setSelectedFiatCurrency] = useState('USD');
-  
-  // Price data from API
-  const [currentPriceData, setCurrentPriceData] = useState<CryptoPriceData | null>(null);
-  const [isPriceLoading, setIsPriceLoading] = useState(false);
-  const [priceError, setPriceError] = useState<string | null>(null);
-  
-  // Notification settings - all off by default
-  const [pushNotifications, setPushNotifications] = useState(false);
-  const [emailNotifications, setEmailNotifications] = useState(false);
-  const [smsNotifications, setSmsNotifications] = useState(false);
-  
-  // Frequency setting - no default selection
-  const [frequency, setFrequency] = useState<'once' | 'recurring' | null>(null);
-  
-  // Tone setting - no default selection
-  const [customTone, setCustomTone] = useState<string | null>(null);
-  
+
   // Validation function to check if all required settings are filled
   const areAllSettingsFilled = (): boolean => {
     // Check if alert name is set (should always be set, but just in case)
