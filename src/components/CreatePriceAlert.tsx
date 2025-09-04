@@ -154,7 +154,7 @@ const CreatePriceAlert: React.FC = () => {
       {/* Content Container */}
       <div className="relative z-10 flex flex-col">
         {/* Header */}
-        <div className="bg-bg-white/95 backdrop-blur-sm sticky top-0 z-20 pt-12">
+        <div className="bg-bg-white/95 backdrop-blur-sm sticky top-0 z-20 pt-6">
           <div className="flex items-center justify-between h-14 px-18 py-9">
             <button className="p-9 -m-9 hover:bg-gray-100 rounded-lg transition-colors">
               <img src={assets.iconArrowLeft} alt="Back" className="w-27 h-27" />
