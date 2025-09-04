@@ -204,7 +204,7 @@ const CreatePriceAlert: React.FC = () => {
           <div className="bg-bg-white border border-gray-stroke rounded-card p-4.5">
             {/* Current Price Section */}
             <div className="px-13.5 py-9 rounded-card">
-              <p className="font-jakarta font-medium text-sm text-gray-500 mb-1">
+              <p className="font-jakarta font-medium text-xs text-gray-500 mb-1">
                 Current: ₿1.00:
               </p>
               <div className="flex items-center justify-between">
@@ -234,7 +234,7 @@ const CreatePriceAlert: React.FC = () => {
             {/* Alert Price Section - Editable */}
             <div className="bg-bg-gray px-13.5 py-9 rounded-card">
               <div className="flex items-center justify-between mb-1">
-                <p className="font-jakarta font-medium text-sm text-text-dark">
+                <p className="font-jakarta font-medium text-xs text-text-dark">
                   Set Alert At:
                 </p>
                 <div className="flex gap-4.5">
