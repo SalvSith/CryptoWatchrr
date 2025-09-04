@@ -341,20 +341,9 @@ const CreatePriceAlert: React.FC = () => {
                       Error loading price
                     </p>
                   ) : currentPriceData ? (
-                    <div className="flex items-center gap-2">
-                      <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
-                        {CryptoApiService.formatPrice(currentPriceData.currentPrice, selectedFiatCurrency)}
-                      </p>
-                      {currentPriceData.priceChangePercentage24h !== 0 && (
-                        <span className={`text-sm font-medium ${
-                          CryptoApiService.formatPercentageChange(currentPriceData.priceChangePercentage24h).isPositive 
-                            ? 'text-green-600' 
-                            : 'text-red-600'
-                        }`}>
-                          {CryptoApiService.formatPercentageChange(currentPriceData.priceChangePercentage24h).text}
-                        </span>
-                      )}
-                    </div>
+                                     <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
+                   {CryptoApiService.formatPrice(currentPriceData.currentPrice, selectedFiatCurrency)}
+                 </p>
                   ) : (
                     <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
                       ₿112,500.00
@@ -376,7 +365,7 @@ const CreatePriceAlert: React.FC = () => {
             <div className="bg-bg-gray px-13.5 py-9 rounded-card">
               <div className="flex items-center justify-between mb-1">
                 <p className="font-jakarta font-medium text-xs text-text-dark">
-                  Set Alert At:
+                  Set At:
                 </p>
                 <div className="flex gap-4.5 flex-wrap min-w-0">
                   {['-5%', '+5%', '+10%'].map((percent) => (
