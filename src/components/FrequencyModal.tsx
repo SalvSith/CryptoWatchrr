@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// Checkmark icon from Figma
-const checkmarkIcon = "http://localhost:3845/assets/cab21afff3bd4fc20072ec1c2a8cf4c22c15e3bb.svg";
+// Checkmark icon - local asset
+const checkmarkIcon = "/assets/checkmark.svg";
 
 interface FrequencyModalProps {
   isOpen: boolean;

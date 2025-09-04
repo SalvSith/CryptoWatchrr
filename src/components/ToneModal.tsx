@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-// Icons from Figma
-const playIcon = "http://localhost:3845/assets/2aaabd5db5f61a194afc4c0e2f67b848e6f47657.svg";
-const checkmarkIcon = "http://localhost:3845/assets/cab21afff3bd4fc20072ec1c2a8cf4c22c15e3bb.svg";
+// Icons - local assets
+const playIcon = "/assets/play.svg";
+const checkmarkIcon = "/assets/checkmark.svg";
 
 interface ToneModalProps {
   isOpen: boolean;
