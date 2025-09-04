@@ -227,7 +227,7 @@ const CreatePriceAlert: React.FC = () => {
               <p className="font-jakarta font-medium text-xs text-gray-500 mb-1">
                 Current: ₿1.00:
               </p>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between relative">
                 <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
                   ₿112 500.00
                 </p>
@@ -242,7 +242,7 @@ const CreatePriceAlert: React.FC = () => {
                     setSelectedCrypto(nextCrypto);
                     setAlertName(cryptoNames[nextCrypto]);
                   }}
-                  className="flex items-center gap-[7px] hover:bg-gray-50 px-2 py-1 rounded-lg transition-colors ml-auto"
+                  className="flex items-center gap-[7px] hover:bg-gray-50 px-2 py-1 rounded-lg transition-colors absolute right-0"
                 >
                   <img src={assets.btcIcon} alt={selectedCrypto} className="w-[30px] h-[30px]" />
                   <span className="font-jakarta font-medium text-sm text-gray-500">{selectedCrypto}</span>
@@ -280,7 +280,7 @@ const CreatePriceAlert: React.FC = () => {
                   </button>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between relative">
                 <div className="flex items-center gap-[3px]">
                   <span className={`font-jakarta font-medium ${calculateFontSize(alertPrice)} text-text-dark tracking-[-2px]`}>
                     $
@@ -293,7 +293,7 @@ const CreatePriceAlert: React.FC = () => {
                     placeholder="0.00"
                   />
                 </div>
-                <button className="flex items-center gap-[7px] hover:bg-white/50 px-2 py-1 rounded-lg transition-colors ml-auto">
+                <button className="flex items-center gap-[7px] hover:bg-white/50 px-2 py-1 rounded-lg transition-colors absolute right-0">
                   <img src={assets.usdFlag} alt="USD" className="w-[30px] h-[30px]" />
                   <span className="font-jakarta font-medium text-sm text-gray-500">USD</span>
                   <img src={assets.chevronRight2} alt=">" className="w-[16px] h-[24px]" />
