@@ -5,6 +5,7 @@ import NotificationsModal from './NotificationsModal';
 import FrequencyModal from './FrequencyModal';
 import ToneModal from './ToneModal';
 import PercentModal from './PercentModal';
+import FiatCurrencyModal from './FiatCurrencyModal';
 
 const CreatePriceAlert: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'fiat' | 'crypto'>('fiat');
@@ -49,6 +50,10 @@ const CreatePriceAlert: React.FC = () => {
   const [isFrequencyModalOpen, setIsFrequencyModalOpen] = useState(false);
   const [isToneModalOpen, setIsToneModalOpen] = useState(false);
   const [isPercentModalOpen, setIsPercentModalOpen] = useState(false);
+  const [isFiatCurrencyModalOpen, setIsFiatCurrencyModalOpen] = useState(false);
+  
+  // Fiat currency setting - defaults to USD
+  const [selectedFiatCurrency, setSelectedFiatCurrency] = useState('USD');
   
   // Notification settings - all off by default
   const [pushNotifications, setPushNotifications] = useState(false);
@@ -90,6 +95,17 @@ const CreatePriceAlert: React.FC = () => {
     'ADA': 'Cardano',
     'SOL': 'Solana',
     'DOT': 'Polkadot',
+  };
+
+  // Map fiat currency codes to details
+  const fiatCurrencies: { [key: string]: { name: string; flag: string } } = {
+    'USD': { name: 'United States Dollar', flag: '/assets/usd-flag.svg' },
+    'ZAR': { name: 'South African Rand', flag: '/assets/zar-flag.svg' },
+    'GBP': { name: 'British Pound Sterling', flag: '/assets/gbp-flag.svg' },
+    'EUR': { name: 'Euro', flag: '/assets/eur-flag.svg' },
+    'CAD': { name: 'Canadian Dollar', flag: '/assets/cad-flag.svg' },
+    'CHF': { name: 'Swiss Franc', flag: '/assets/chf-flag.svg' },
+    'AUD': { name: 'Australian Dollar', flag: '/assets/aud-flag.svg' },
   };
 
   const formatPrice = (value: string) => {
@@ -141,6 +157,11 @@ const CreatePriceAlert: React.FC = () => {
       setSelectedPercentage(`${percentageValue > 0 ? '+' : ''}${percentageValue}%`);
       setIsCustomPercentage(true);
     }
+  };
+
+  const handleUpdateFiatCurrency = (currency: string) => {
+    setSelectedFiatCurrency(currency);
+    setIsFiatCurrencyModalOpen(false);
   };
 
   const getToneDisplayText = (): string => {
@@ -315,9 +336,12 @@ const CreatePriceAlert: React.FC = () => {
                     placeholder="0.00"
                   />
                 </div>
-                <button className="flex items-center gap-[7px] hover:bg-white/50 px-2 py-1 rounded-lg transition-colors absolute right-[-16px]">
-                  <img src={assets.usdFlag} alt="USD" className="w-[30px] h-[30px]" />
-                  <span className="font-jakarta font-medium text-sm text-gray-500">USD</span>
+                <button 
+                  onClick={() => setIsFiatCurrencyModalOpen(true)}
+                  className="flex items-center gap-[7px] hover:bg-white/50 px-2 py-1 rounded-lg transition-colors absolute right-[-16px]"
+                >
+                  <img src={fiatCurrencies[selectedFiatCurrency]?.flag || assets.usdFlag} alt={selectedFiatCurrency} className="w-[30px] h-[30px]" />
+                  <span className="font-jakarta font-medium text-sm text-gray-500">{selectedFiatCurrency}</span>
                   <img src={assets.chevronRight2} alt=">" className="w-[16px] h-[24px]" />
                 </button>
               </div>
@@ -479,6 +503,14 @@ const CreatePriceAlert: React.FC = () => {
         onClose={() => setIsPercentModalOpen(false)}
         selectedPercentage={selectedPercentage}
         onUpdatePercentage={handleUpdatePercentage}
+      />
+
+      {/* Fiat Currency Modal */}
+      <FiatCurrencyModal
+        isOpen={isFiatCurrencyModalOpen}
+        onClose={() => setIsFiatCurrencyModalOpen(false)}
+        selectedCurrency={selectedFiatCurrency}
+        onUpdateCurrency={handleUpdateFiatCurrency}
       />
     </div>
   );
