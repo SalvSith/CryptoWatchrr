@@ -6,6 +6,7 @@ import FrequencyModal from './FrequencyModal';
 import ToneModal from './ToneModal';
 import PercentModal from './PercentModal';
 import FiatCurrencyModal from './FiatCurrencyModal';
+import CryptocurrencyModal from './CryptocurrencyModal';
 
 const CreatePriceAlert: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'fiat' | 'crypto'>('fiat');
@@ -51,6 +52,7 @@ const CreatePriceAlert: React.FC = () => {
   const [isToneModalOpen, setIsToneModalOpen] = useState(false);
   const [isPercentModalOpen, setIsPercentModalOpen] = useState(false);
   const [isFiatCurrencyModalOpen, setIsFiatCurrencyModalOpen] = useState(false);
+  const [isCryptocurrencyModalOpen, setIsCryptocurrencyModalOpen] = useState(false);
   
   // Fiat currency setting - defaults to USD
   const [selectedFiatCurrency, setSelectedFiatCurrency] = useState('USD');
@@ -107,6 +109,16 @@ const CreatePriceAlert: React.FC = () => {
     'AUD': { name: 'Australian Dollar', flag: '/assets/aud-flag.svg' },
   };
 
+  // Map cryptocurrency codes to details
+  const cryptocurrencies: { [key: string]: { name: string; icon: string } } = {
+    'BTC': { name: 'Bitcoin', icon: '/assets/btc-icon.svg' },
+    'ETH': { name: 'Ethereum', icon: '/assets/eth-icon.svg' },
+    'XRP': { name: 'Ripple', icon: '/assets/xrp-icon.svg' },
+    'BNB': { name: 'Binance Coin', icon: '/assets/bnb-icon.svg' },
+    'SOL': { name: 'Solana', icon: '/assets/sol-icon.svg' },
+    'DOGE': { name: 'Dogecoin', icon: '/assets/doge-icon.svg' },
+  };
+
   const formatPrice = (value: string) => {
     // Remove non-numeric characters except decimal
     const numericValue = value.replace(/[^0-9.]/g, '');
@@ -161,6 +173,12 @@ const CreatePriceAlert: React.FC = () => {
   const handleUpdateFiatCurrency = (currency: string) => {
     setSelectedFiatCurrency(currency);
     setIsFiatCurrencyModalOpen(false);
+  };
+
+  const handleUpdateCryptocurrency = (crypto: string) => {
+    setSelectedCrypto(crypto);
+    setAlertName(cryptocurrencies[crypto]?.name || crypto);
+    setIsCryptocurrencyModalOpen(false);
   };
 
   const getToneDisplayText = (): string => {
@@ -273,20 +291,11 @@ const CreatePriceAlert: React.FC = () => {
                 <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
                   ₿112 500.00
                 </p>
-                <button 
-                  onClick={() => {
-                    // This would normally open a crypto selector modal
-                    // For now, we'll just cycle through a few cryptos for demo
-                    const cryptos = ['BTC', 'ETH', 'ADA', 'SOL'];
-                    const currentIndex = cryptos.indexOf(selectedCrypto);
-                    const nextIndex = (currentIndex + 1) % cryptos.length;
-                    const nextCrypto = cryptos[nextIndex];
-                    setSelectedCrypto(nextCrypto);
-                    setAlertName(cryptoNames[nextCrypto]);
-                  }}
+                                <button
+                  onClick={() => setIsCryptocurrencyModalOpen(true)}
                   className="flex items-center gap-[7px] hover:bg-gray-50 px-2 py-1 rounded-lg transition-colors absolute right-[-16px]"
                 >
-                  <img src={assets.btcIcon} alt={selectedCrypto} className="w-[30px] h-[30px]" />
+                  <img src={cryptocurrencies[selectedCrypto]?.icon || assets.btcIcon} alt={selectedCrypto} className="w-[30px] h-[30px]" />
                   <span className="font-jakarta font-medium text-sm text-gray-500">{selectedCrypto}</span>
                   <img src={assets.chevronSmallRight} alt=">" className="w-[16px] h-[24px]" />
                 </button>
@@ -510,6 +519,14 @@ const CreatePriceAlert: React.FC = () => {
         onClose={() => setIsFiatCurrencyModalOpen(false)}
         selectedCurrency={selectedFiatCurrency}
         onUpdateCurrency={handleUpdateFiatCurrency}
+      />
+
+      {/* Cryptocurrency Modal */}
+      <CryptocurrencyModal
+        isOpen={isCryptocurrencyModalOpen}
+        onClose={() => setIsCryptocurrencyModalOpen(false)}
+        selectedCryptocurrency={selectedCrypto}
+        onUpdateCryptocurrency={handleUpdateCryptocurrency}
       />
     </div>
   );
