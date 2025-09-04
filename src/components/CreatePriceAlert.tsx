@@ -18,6 +18,9 @@ const CreatePriceAlert: React.FC = () => {
     // If a custom percentage is selected (from modal), show it
     if (selectedPercentage && isCustomPercentage) return selectedPercentage;
     
+    // If a preset percentage is selected, show "Set %"
+    if (selectedPercentage && !isCustomPercentage) return 'Set %';
+    
     const numericValue = parseFloat(currentValue.replace(/[^0-9.]/g, ''));
     if (isNaN(numericValue) || numericValue === 0) return 'Set %';
     
