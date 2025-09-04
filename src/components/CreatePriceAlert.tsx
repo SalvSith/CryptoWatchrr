@@ -61,6 +61,28 @@ const CreatePriceAlert: React.FC = () => {
   // Tone setting - no default selection
   const [customTone, setCustomTone] = useState<string | null>(null);
   
+  // Validation function to check if all required settings are filled
+  const areAllSettingsFilled = (): boolean => {
+    // Check if alert name is set (should always be set, but just in case)
+    if (!alertName.trim()) return false;
+    
+    // Check if at least one notification method is selected
+    const hasNotifications = pushNotifications || emailNotifications || smsNotifications;
+    if (!hasNotifications) return false;
+    
+    // Check if frequency is selected
+    if (!frequency) return false;
+    
+    // Check if custom tone is selected
+    if (!customTone) return false;
+    
+    // Check if alert price is different from base price (meaning user has set a target)
+    const numericPrice = parseFloat(alertPrice.replace(/[^0-9.]/g, ''));
+    if (isNaN(numericPrice) || numericPrice === basePrice) return false;
+    
+    return true;
+  };
+  
   // Map crypto symbols to names
   const cryptoNames: { [key: string]: string } = {
     'BTC': 'Bitcoin',
@@ -404,7 +426,14 @@ const CreatePriceAlert: React.FC = () => {
           </div>
 
           {/* Set Alert Button */}
-          <button className="w-full bg-button-disabled hover:bg-text-primary text-white font-jakarta font-medium text-base py-13.5 px-27 rounded-button transition-colors active:scale-[0.98]">
+          <button 
+            className={`w-full font-jakarta font-medium text-base py-13.5 px-27 rounded-button transition-colors ${
+              areAllSettingsFilled() 
+                ? 'bg-text-primary hover:bg-text-primary/90 text-white active:scale-[0.98] cursor-pointer' 
+                : 'bg-button-disabled text-white cursor-not-allowed opacity-60'
+            }`}
+            disabled={!areAllSettingsFilled()}
+          >
             Set price alert
           </button>
         </div>
