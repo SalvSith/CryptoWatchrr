@@ -242,7 +242,7 @@ const CreatePriceAlert: React.FC = () => {
                     setSelectedCrypto(nextCrypto);
                     setAlertName(cryptoNames[nextCrypto]);
                   }}
-                  className="flex items-center gap-[7px] hover:bg-gray-50 px-2 py-1 rounded-lg transition-colors absolute right-0"
+                  className="flex items-center gap-[7px] hover:bg-gray-50 px-2 py-1 rounded-lg transition-colors absolute right-[-8px]"
                 >
                   <img src={assets.btcIcon} alt={selectedCrypto} className="w-[30px] h-[30px]" />
                   <span className="font-jakarta font-medium text-sm text-gray-500">{selectedCrypto}</span>
@@ -293,7 +293,7 @@ const CreatePriceAlert: React.FC = () => {
                     placeholder="0.00"
                   />
                 </div>
-                <button className="flex items-center gap-[7px] hover:bg-white/50 px-2 py-1 rounded-lg transition-colors absolute right-0">
+                <button className="flex items-center gap-[7px] hover:bg-white/50 px-2 py-1 rounded-lg transition-colors absolute right-[-8px]">
                   <img src={assets.usdFlag} alt="USD" className="w-[30px] h-[30px]" />
                   <span className="font-jakarta font-medium text-sm text-gray-500">USD</span>
                   <img src={assets.chevronRight2} alt=">" className="w-[16px] h-[24px]" />
