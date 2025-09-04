@@ -10,12 +10,13 @@ const CreatePriceAlert: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'fiat' | 'crypto'>('fiat');
   const [alertPrice, setAlertPrice] = useState('112500.00');
   const [selectedPercentage, setSelectedPercentage] = useState<string | null>(null);
+  const [isCustomPercentage, setIsCustomPercentage] = useState(false);
   
   const basePrice = 112500;
   
   const calculatePercentageDifference = (currentValue: string): string => {
-    // If a custom percentage is selected, show it
-    if (selectedPercentage) return selectedPercentage;
+    // If a custom percentage is selected (from modal), show it
+    if (selectedPercentage && isCustomPercentage) return selectedPercentage;
     
     const numericValue = parseFloat(currentValue.replace(/[^0-9.]/g, ''));
     if (isNaN(numericValue) || numericValue === 0) return 'Set %';
@@ -113,6 +114,7 @@ const CreatePriceAlert: React.FC = () => {
       const newPrice = basePrice * (1 + percentageValue / 100);
       setAlertPrice(newPrice.toFixed(2));
       setSelectedPercentage(`${percentageValue > 0 ? '+' : ''}${percentageValue}%`);
+      setIsCustomPercentage(true);
     }
   };
 
@@ -135,6 +137,7 @@ const CreatePriceAlert: React.FC = () => {
     setAlertPrice(value);
     // Clear selected percentage when manually typing
     setSelectedPercentage(null);
+    setIsCustomPercentage(false);
   };
 
   const applyPercentage = (percentage: number) => {
@@ -144,11 +147,13 @@ const CreatePriceAlert: React.FC = () => {
     if (selectedPercentage === percentageString) {
       setAlertPrice(basePrice.toFixed(2));
       setSelectedPercentage(null);
+      setIsCustomPercentage(false);
     } else {
       // Apply new percentage
       const newPrice = basePrice * (1 + percentage / 100);
       setAlertPrice(newPrice.toFixed(2));
       setSelectedPercentage(percentageString);
+      setIsCustomPercentage(false);
     }
   };
 
