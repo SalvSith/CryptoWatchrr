@@ -14,8 +14,8 @@ const CreatePriceAlert: React.FC = () => {
   const basePrice = 112500;
   
   const calculatePercentageDifference = (currentValue: string): string => {
-    // If a preset percentage is selected, always show "Set %"
-    if (selectedPercentage) return 'Set %';
+    // If a custom percentage is selected, show it
+    if (selectedPercentage) return selectedPercentage;
     
     const numericValue = parseFloat(currentValue.replace(/[^0-9.]/g, ''));
     if (isNaN(numericValue) || numericValue === 0) return 'Set %';
