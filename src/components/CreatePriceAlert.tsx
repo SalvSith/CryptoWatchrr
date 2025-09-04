@@ -190,7 +190,7 @@ const CreatePriceAlert: React.FC = () => {
         <div className="px-18 pb-18 space-y-18 overflow-x-hidden">
           {/* Tab Switcher - Same width as card below */}
           <div className="flex items-center justify-center">
-            <div className="bg-bg-gray border border-gray-stroke rounded-switcher p-[4.499px] flex w-full max-w-[402px] relative h-[51.74px]">
+            <div className="bg-bg-gray border border-gray-stroke rounded-switcher p-[4.499px] flex w-full max-w-[402px] relative h-[44.992px]">
               {/* Sliding background */}
               <div 
                 className={`absolute top-[4.499px] bottom-[4.499px] w-[calc(50%-2.25px)] bg-bg-white rounded-[8px] shadow-sm transition-transform duration-300 ease-out ${
@@ -199,7 +199,7 @@ const CreatePriceAlert: React.FC = () => {
               />
               <button
                 onClick={() => setActiveTab('fiat')}
-                className={`flex-1 py-[8.998px] px-[8.998px] rounded-[8px] font-jakarta font-medium text-[15.75px] transition-colors duration-300 relative z-10 h-[35.993px] ${
+                className={`flex-1 flex items-center justify-center rounded-[8px] font-jakarta font-medium text-[15.75px] transition-colors duration-300 relative z-10 h-[35.993px] ${
                   activeTab === 'fiat'
                     ? 'text-text-black'
                     : 'text-text-gray'
@@ -209,7 +209,7 @@ const CreatePriceAlert: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab('crypto')}
-                className={`flex-1 py-[8.998px] px-[8.998px] rounded-[8px] font-jakarta font-medium text-[15.75px] transition-transform duration-300 relative z-10 h-[35.993px] ${
+                className={`flex-1 flex items-center justify-center rounded-[8px] font-jakarta font-medium text-[15.75px] transition-colors duration-300 relative z-10 h-[35.993px] ${
                   activeTab === 'crypto'
                     ? 'text-text-black'
                     : 'text-text-gray'
