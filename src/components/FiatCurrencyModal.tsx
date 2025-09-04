@@ -38,6 +38,7 @@ const FiatCurrencyModal: React.FC<FiatCurrencyModalProps> = ({
   
   const startYRef = useRef(0);
   const currentYRef = useRef(0);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   // Filter currencies based on search query
   const filteredCurrencies = currencies.filter(currency =>
@@ -113,9 +114,9 @@ const FiatCurrencyModal: React.FC<FiatCurrencyModalProps> = ({
   };
 
   const handleMouseStart = (e: React.MouseEvent) => {
-    // Don't start drag if clicking a currency option or search input
+    // Don't start drag if clicking on an input or button
     const target = e.target as HTMLElement;
-    if (target.closest('button') || target.closest('input') || target.closest('[role="button"]')) {
+    if (target.tagName === 'INPUT' || target.tagName === 'BUTTON' || target.closest('input, button')) {
       return;
     }
     
@@ -127,7 +128,6 @@ const FiatCurrencyModal: React.FC<FiatCurrencyModalProps> = ({
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging) return;
-    e.preventDefault();
     
     const deltaY = e.clientY - startYRef.current;
     
@@ -138,17 +138,20 @@ const FiatCurrencyModal: React.FC<FiatCurrencyModalProps> = ({
     }
   };
 
-  const handleMouseEnd = () => {
+  const handleMouseUp = () => {
     if (!isDragging) return;
     
-    setIsDragging(false);
+    const deltaY = currentYRef.current - startYRef.current;
     
-    // Close if dragged down more than 100px
-    if (dragY > 100) {
+    // Close modal if dragged down more than 100px
+    if (deltaY > 100) {
       closeModal();
     } else {
+      // Snap back to original position
       setDragY(0);
     }
+    
+    setIsDragging(false);
   };
 
   const handleCurrencySelect = (currencyId: string) => {
@@ -161,77 +164,77 @@ const FiatCurrencyModal: React.FC<FiatCurrencyModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-end justify-center z-50 touch-none select-none"
+      className={`fixed inset-0 z-50 flex items-end justify-center bg-black transition-opacity duration-300 ${
+        isOpen && isVisible ? 'bg-opacity-50' : 'bg-opacity-0'
+      }`}
       onClick={handleBackdropClick}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseEnd}
-      onMouseLeave={handleMouseEnd}
-      style={{ touchAction: 'none' }}
     >
       <div
-        className={`bg-[#fbfbfb] rounded-t-[21.371px] w-full max-w-[420.67px] mb-6 transition-transform duration-300 ease-out relative ${
-          isVisible ? 'translate-y-0' : 'translate-y-full'
+        ref={modalRef}
+        className={`bg-[#fbfbfb] flex flex-col items-start justify-start overflow-hidden relative rounded-[21.371px] w-full max-w-[420.67px] mx-4 mb-6 transition-transform duration-300 ease-out touch-none select-none ${
+          isDragging ? 'transition-none cursor-grabbing' : 'cursor-grab'
         }`}
-        style={{ 
-          transform: `translateY(${isVisible ? dragY : '100%'}px)`,
+        style={{
+          transform: `translateY(${!isVisible ? '100%' : dragY + 'px'})`,
+          touchAction: 'none',
           height: '685.751px'
         }}
+        onClick={(e) => e.stopPropagation()}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         onMouseDown={handleMouseStart}
-        onClick={(e) => e.stopPropagation()}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
       >
-        {/* Drag Handle */}
-        <div className="absolute bg-gray-500 h-[4.499px] left-1/2 rounded-[112.479px] top-[-2.25px] translate-x-[-50%] w-[35.993px]" />
+        {/* Home Indicator (Drag Handle) */}
+        <div className="absolute bg-gray-500 h-[4.499px] left-1/2 rounded-[112.479px] top-[-2.25px] translate-x-[-50%] w-[35.993px] z-20" />
         
-        {/* Background Pattern */}
-        <div className="absolute bottom-[0.42px] content-stretch flex flex-col items-start justify-start left-1/2 translate-x-[-50%] top-[17.997px]">
-          <div className="content-stretch flex items-center justify-start relative shrink-0 w-full">
-            {[...Array(20)].map((_, i) => (
-              <div key={i} className="relative shrink-0 size-[33.744px]">
-                <div className="absolute border-[#f0f0f2] border-[1.125px] border-solid inset-[-0.562px] pointer-events-none" />
-              </div>
-            ))}
+        {/* Header Section */}
+        <div className="box-border flex flex-col gap-[4.499px] items-center justify-center overflow-hidden p-[17.997px] relative shrink-0 w-full">
+          {/* Grid Background Pattern */}
+          <div className="absolute bottom-[0.42px] flex flex-col items-start justify-start left-1/2 translate-x-[-50%] pointer-events-none">
+            <div className="flex items-center justify-start relative shrink-0 w-full">
+              {Array.from({ length: 20 }).map((_, i) => (
+                <div key={i} className="relative shrink-0 w-[33.744px] h-[33.744px]">
+                  <div className="absolute border-[#f0f0f2] border-[1.125px] border-solid inset-[-0.562px] pointer-events-none" />
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center justify-start relative shrink-0 w-full">
+              {Array.from({ length: 20 }).map((_, i) => (
+                <div key={i} className="relative shrink-0 w-[33.744px] h-[33.744px]">
+                  <div className="absolute border-[#f0f0f2] border-[1.125px] border-solid inset-[-0.562px] pointer-events-none" />
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="content-stretch flex items-center justify-start relative shrink-0 w-full">
-            {[...Array(20)].map((_, i) => (
-              <div key={i} className="relative shrink-0 size-[33.744px]">
-                <div className="absolute border-[#f0f0f2] border-[1.125px] border-solid inset-[-0.562px] pointer-events-none" />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Header */}
-        <div className="box-border content-stretch flex flex-col gap-[4.499px] items-center justify-center overflow-clip p-[17.997px] relative shrink-0 w-full">
+          
           <h2 className="font-jakarta font-medium text-[17.997px] leading-[29.244px] text-[#15171a] relative z-10">
             Select Fiat Currency
           </h2>
         </div>
 
-        {/* Content */}
-        <div className="box-border content-stretch flex flex-col gap-[26.995px] items-center justify-end p-[17.997px] relative shrink-0 w-full">
+        {/* Content Section */}
+        <div className="flex flex-col gap-[26.995px] items-center justify-start p-[17.997px] relative flex-1 w-full overflow-hidden">
           {/* Search Input */}
-          <div className="content-stretch flex flex-col gap-[8.998px] items-start justify-start relative shrink-0 w-[384.677px]">
-            <div className="content-stretch flex flex-col gap-[13.497px] items-start justify-start relative shrink-0 w-full">
-              <div className="bg-[#f4f4f6] box-border content-stretch flex gap-[17.997px] h-[56.239px] items-center justify-start px-[17.997px] py-[13.497px] relative rounded-[11px] shrink-0 w-full border border-[#e1e3e6]">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="basis-0 font-jakarta font-normal text-[15.75px] leading-[26.995px] text-[#898e99] bg-transparent border-none outline-none grow min-h-px min-w-px placeholder-[#898e99]"
-                />
-                <div className="relative shrink-0 size-[26.995px]">
-                  <img src="/assets/search-icon.svg" alt="Search" className="w-full h-full" />
-                </div>
+          <div className="flex flex-col gap-[8.998px] items-start justify-start relative shrink-0 w-full max-w-[384.677px]">
+            <div className="bg-[#f4f4f6] box-border flex gap-[17.997px] h-[56.239px] items-center justify-start px-[17.997px] py-[13.497px] relative rounded-[11px] shrink-0 w-full border border-[#e1e3e6]">
+              <input
+                type="text"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="flex-1 font-jakarta font-normal text-[15.75px] leading-[26.995px] text-[#898e99] bg-transparent border-none outline-none placeholder-[#898e99]"
+              />
+              <div className="relative shrink-0 size-[26.995px]">
+                <img src="/assets/search-icon.svg" alt="Search" className="w-full h-full" />
               </div>
             </div>
           </div>
 
           {/* Currency List */}
-          <div className="content-stretch flex flex-col gap-[8.998px] items-start justify-start relative shrink-0 w-full max-h-[400px] overflow-y-auto">
+          <div className="flex flex-col gap-[8.998px] items-start justify-start relative flex-1 w-full overflow-y-auto">
             {filteredCurrencies.map((currency) => (
               <button
                 key={currency.id}
