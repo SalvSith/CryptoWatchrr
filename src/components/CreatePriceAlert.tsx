@@ -141,7 +141,7 @@ const CreatePriceAlert: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-bg-white relative w-full max-w-[438px] mx-auto overflow-x-hidden">
+    <div className="min-h-screen bg-bg-white relative w-full max-w-[100vw] mx-auto overflow-x-hidden">
       {/* Grid Background Pattern */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="grid grid-cols-4 h-full">
