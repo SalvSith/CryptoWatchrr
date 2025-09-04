@@ -195,7 +195,7 @@ const ToneModal: React.FC<ToneModalProps> = ({
     setPlayingTone(toneId);
 
     // Create new audio element and play
-    const audio = new Audio(`/Sound Alerts/${fileName}`);
+    const audio = new Audio(`/sounds/${fileName}`);
     audioRef.current = audio;
     
     // Add event listeners
