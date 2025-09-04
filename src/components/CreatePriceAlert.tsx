@@ -199,7 +199,7 @@ const CreatePriceAlert: React.FC = () => {
               />
               <button
                 onClick={() => setActiveTab('fiat')}
-                className={`flex-1 flex items-center justify-center rounded-[8px] font-jakarta font-medium text-[15.75px] transition-colors duration-300 relative z-10 h-[35.993px] -mt-[3px] ${
+                className={`flex-1 flex items-center justify-center rounded-[8px] font-jakarta font-medium text-[15.75px] transition-colors duration-300 relative z-10 h-[35.993px] -mt-[2px] ${
                   activeTab === 'fiat'
                     ? 'text-text-black'
                     : 'text-text-gray'
@@ -209,7 +209,7 @@ const CreatePriceAlert: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab('crypto')}
-                className={`flex-1 flex items-center justify-center rounded-[8px] font-jakarta font-medium text-[15.75px] transition-colors duration-300 relative z-10 h-[35.993px] -mt-[3px] ${
+                className={`flex-1 flex items-center justify-center rounded-[8px] font-jakarta font-medium text-[15.75px] transition-colors duration-300 relative z-10 h-[35.993px] -mt-[2px] ${
                   activeTab === 'crypto'
                     ? 'text-text-black'
                     : 'text-text-gray'
