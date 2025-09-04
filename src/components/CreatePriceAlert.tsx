@@ -102,7 +102,6 @@ const CreatePriceAlert: React.FC = () => {
     'USD': { name: 'United States Dollar', flag: '/assets/usd-flag.svg' },
     'ZAR': { name: 'South African Rand', flag: '/assets/zar-flag.svg' },
     'GBP': { name: 'British Pound Sterling', flag: '/assets/gbp-flag.svg' },
-    'EUR': { name: 'Euro', flag: '/assets/eur-flag.svg' },
     'CAD': { name: 'Canadian Dollar', flag: '/assets/cad-flag.svg' },
     'CHF': { name: 'Swiss Franc', flag: '/assets/chf-flag.svg' },
     'AUD': { name: 'Australian Dollar', flag: '/assets/aud-flag.svg' },

@@ -18,7 +18,6 @@ const currencies: Currency[] = [
   { id: 'USD', name: 'United States Dollar', code: 'USD', flag: '/assets/usd-flag.svg' },
   { id: 'ZAR', name: 'South African Rand', code: 'ZAR', flag: '/assets/zar-flag.svg' },
   { id: 'GBP', name: 'British Pound Sterling', code: 'GBP', flag: '/assets/gbp-flag.svg' },
-  { id: 'EUR', name: 'Euro', code: 'EUR', flag: '/assets/eur-flag.svg' },
   { id: 'CAD', name: 'Canadian Dollar', code: 'CAD', flag: '/assets/cad-flag.svg' },
   { id: 'CHF', name: 'Swiss Franc', code: 'CHF', flag: '/assets/chf-flag.svg' },
   { id: 'AUD', name: 'Australian Dollar', code: 'AUD', flag: '/assets/aud-flag.svg' },
@@ -34,17 +33,10 @@ const FiatCurrencyModal: React.FC<FiatCurrencyModalProps> = ({
   const [dragY, setDragY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [localSelectedCurrency, setLocalSelectedCurrency] = useState(selectedCurrency);
-  const [searchQuery, setSearchQuery] = useState('');
   
   const startYRef = useRef(0);
   const currentYRef = useRef(0);
   const modalRef = useRef<HTMLDivElement>(null);
-
-  // Filter currencies based on search query
-  const filteredCurrencies = currencies.filter(currency =>
-    currency.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    currency.code.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   useEffect(() => {
     if (isOpen) {
@@ -52,7 +44,6 @@ const FiatCurrencyModal: React.FC<FiatCurrencyModalProps> = ({
       setDragY(0);
       setIsDragging(false);
       setLocalSelectedCurrency(selectedCurrency);
-      setSearchQuery('');
       setTimeout(() => setIsVisible(true), 10);
     } else {
       setIsVisible(false);
@@ -177,7 +168,7 @@ const FiatCurrencyModal: React.FC<FiatCurrencyModalProps> = ({
         style={{
           transform: `translateY(${!isVisible ? '100%' : dragY + 'px'})`,
           touchAction: 'none',
-          height: '685.751px'
+          height: '525px'
         }}
         onClick={(e) => e.stopPropagation()}
         onTouchStart={handleTouchStart}
@@ -216,26 +207,10 @@ const FiatCurrencyModal: React.FC<FiatCurrencyModalProps> = ({
         </div>
 
         {/* Content Section */}
-        <div className="flex flex-col gap-[26.995px] items-center justify-start p-[17.997px] relative flex-1 w-full overflow-hidden">
-          {/* Search Input */}
-          <div className="flex flex-col gap-[8.998px] items-start justify-start relative shrink-0 w-full max-w-[384.677px]">
-            <div className="bg-[#f4f4f6] box-border flex gap-[17.997px] h-[56.239px] items-center justify-start px-[17.997px] py-[13.497px] relative rounded-[11px] shrink-0 w-full border border-[#e1e3e6]">
-              <input
-                type="text"
-                placeholder="Search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 font-jakarta font-normal text-[15.75px] leading-[26.995px] text-[#898e99] bg-transparent border-none outline-none placeholder-[#898e99]"
-              />
-              <div className="relative shrink-0 size-[26.995px]">
-                <img src="/assets/search-icon.svg" alt="Search" className="w-full h-full" />
-              </div>
-            </div>
-          </div>
-
+        <div className="box-border flex flex-col gap-[26.995px] items-center justify-end p-[17.997px] relative shrink-0 w-full">
           {/* Currency List */}
-          <div className="flex flex-col gap-[8.998px] items-start justify-start relative flex-1 w-full overflow-y-auto">
-            {filteredCurrencies.map((currency) => (
+          <div className="flex flex-col gap-[8.998px] items-start justify-start relative shrink-0 w-full">
+            {currencies.map((currency) => (
               <button
                 key={currency.id}
                 onClick={() => handleCurrencySelect(currency.id)}
