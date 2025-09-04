@@ -4,6 +4,7 @@ import AlertNameModal from './AlertNameModal';
 import NotificationsModal from './NotificationsModal';
 import FrequencyModal from './FrequencyModal';
 import ToneModal from './ToneModal';
+import PercentModal from './PercentModal';
 
 const CreatePriceAlert: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'fiat' | 'crypto'>('fiat');
@@ -43,6 +44,7 @@ const CreatePriceAlert: React.FC = () => {
   const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
   const [isFrequencyModalOpen, setIsFrequencyModalOpen] = useState(false);
   const [isToneModalOpen, setIsToneModalOpen] = useState(false);
+  const [isPercentModalOpen, setIsPercentModalOpen] = useState(false);
   
   // Notification settings - all off by default
   const [pushNotifications, setPushNotifications] = useState(false);
@@ -102,6 +104,16 @@ const CreatePriceAlert: React.FC = () => {
 
   const handleUpdateTone = (newTone: string) => {
     setCustomTone(newTone);
+  };
+
+  const handleUpdatePercentage = (newPercentage: string) => {
+    // Parse the percentage and apply it to the price
+    const percentageValue = parseFloat(newPercentage.replace('%', ''));
+    if (!isNaN(percentageValue)) {
+      const newPrice = basePrice * (1 + percentageValue / 100);
+      setAlertPrice(newPrice.toFixed(2));
+      setSelectedPercentage(`${percentageValue > 0 ? '+' : ''}${percentageValue}%`);
+    }
   };
 
   const getToneDisplayText = (): string => {
@@ -249,11 +261,13 @@ const CreatePriceAlert: React.FC = () => {
                       {percent}
                     </button>
                   ))}
-                  <button className={`px-13.5 py-2.25 bg-bg-white border rounded-[7px] font-jakarta font-medium text-xs hover:bg-gray-50 transition-colors ${
-                    calculatePercentageDifference(alertPrice) !== 'Set %' 
-                      ? 'border-text-primary text-text-primary' 
-                      : 'border-gray-stroke text-text-black'
-                  }`}>
+                  <button 
+                    onClick={() => setIsPercentModalOpen(true)}
+                    className={`px-13.5 py-2.25 bg-bg-white border rounded-[7px] font-jakarta font-medium text-xs hover:bg-gray-50 transition-colors ${
+                      calculatePercentageDifference(alertPrice) !== 'Set %' 
+                        ? 'border-text-primary text-text-primary' 
+                        : 'border-gray-stroke text-text-black'
+                    }`}>
                     {calculatePercentageDifference(alertPrice)}
                   </button>
                 </div>
@@ -420,6 +434,14 @@ const CreatePriceAlert: React.FC = () => {
         onClose={() => setIsToneModalOpen(false)}
         selectedTone={customTone}
         onUpdateTone={handleUpdateTone}
+      />
+
+      {/* Percent Modal */}
+      <PercentModal
+        isOpen={isPercentModalOpen}
+        onClose={() => setIsPercentModalOpen(false)}
+        selectedPercentage={selectedPercentage}
+        onUpdatePercentage={handleUpdatePercentage}
       />
     </div>
   );
