@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { assets } from '../assets/images';
+import { CryptoApiService, CryptoPriceData } from '../services/cryptoApi';
 import AlertNameModal from './AlertNameModal';
 import NotificationsModal from './NotificationsModal';
 import FrequencyModal from './FrequencyModal';
@@ -14,7 +15,7 @@ const CreatePriceAlert: React.FC = () => {
   const [selectedPercentage, setSelectedPercentage] = useState<string | null>(null);
   const [isCustomPercentage, setIsCustomPercentage] = useState(false);
   
-  const basePrice = 112500;
+  const basePrice = currentPriceData?.currentPrice || 112500;
   
   const calculatePercentageDifference = (currentValue: string): string => {
     // If a custom percentage is selected (from modal), show it
@@ -56,6 +57,11 @@ const CreatePriceAlert: React.FC = () => {
   
   // Fiat currency setting - defaults to USD
   const [selectedFiatCurrency, setSelectedFiatCurrency] = useState('USD');
+  
+  // Price data from API
+  const [currentPriceData, setCurrentPriceData] = useState<CryptoPriceData | null>(null);
+  const [isPriceLoading, setIsPriceLoading] = useState(false);
+  const [priceError, setPriceError] = useState<string | null>(null);
   
   // Notification settings - all off by default
   const [pushNotifications, setPushNotifications] = useState(false);
@@ -181,6 +187,39 @@ const CreatePriceAlert: React.FC = () => {
     setIsCryptocurrencyModalOpen(false);
   };
 
+  // Function to fetch current price data
+  const fetchCurrentPrice = async () => {
+    setIsPriceLoading(true);
+    setPriceError(null);
+    
+    try {
+      const response = await CryptoApiService.getCurrentPrice(selectedCrypto, selectedFiatCurrency);
+      
+      if (response.success && response.data) {
+        setCurrentPriceData(response.data);
+      } else {
+        setPriceError(response.error || 'Failed to fetch price data');
+      }
+    } catch (error) {
+      setPriceError('Network error occurred');
+      console.error('Error fetching price:', error);
+    } finally {
+      setIsPriceLoading(false);
+    }
+  };
+
+  // Load price data when crypto or fiat currency changes
+  useEffect(() => {
+    fetchCurrentPrice();
+  }, [selectedCrypto, selectedFiatCurrency]);
+
+  // Update alert price when current price data changes
+  useEffect(() => {
+    if (currentPriceData) {
+      setAlertPrice(currentPriceData.currentPrice.toFixed(2));
+    }
+  }, [currentPriceData]);
+
   const getToneDisplayText = (): string => {
     if (customTone === null) return 'Select';
     const toneMap: { [key: string]: string } = {
@@ -288,9 +327,39 @@ const CreatePriceAlert: React.FC = () => {
                 Current: ₿1.00:
               </p>
               <div className="flex items-center justify-between relative">
-                <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
-                  ₿112 500.00
-                </p>
+                <div className="flex items-center gap-2">
+                  {isPriceLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-text-primary"></div>
+                      <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
+                        Loading...
+                      </p>
+                    </div>
+                  ) : priceError ? (
+                    <p className="font-jakarta font-medium text-xl text-red-500 tracking-[-2px]">
+                      Error loading price
+                    </p>
+                  ) : currentPriceData ? (
+                    <div className="flex items-center gap-2">
+                      <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
+                        {CryptoApiService.formatPrice(currentPriceData.currentPrice, selectedFiatCurrency)}
+                      </p>
+                      {currentPriceData.priceChangePercentage24h !== 0 && (
+                        <span className={`text-sm font-medium ${
+                          CryptoApiService.formatPercentageChange(currentPriceData.priceChangePercentage24h).isPositive 
+                            ? 'text-green-600' 
+                            : 'text-red-600'
+                        }`}>
+                          {CryptoApiService.formatPercentageChange(currentPriceData.priceChangePercentage24h).text}
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
+                      ₿112,500.00
+                    </p>
+                  )}
+                </div>
                                 <button
                   onClick={() => setIsCryptocurrencyModalOpen(true)}
                   className="flex items-center gap-[7px] hover:bg-gray-50 px-2 py-1 rounded-lg transition-colors absolute right-[-16px]"
