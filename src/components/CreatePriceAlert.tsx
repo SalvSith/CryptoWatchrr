@@ -141,7 +141,7 @@ const CreatePriceAlert: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-bg-white relative max-w-[438px] mx-auto">
+    <div className="min-h-screen bg-bg-white relative w-full max-w-[438px] mx-auto overflow-x-hidden">
       {/* Grid Background Pattern */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="grid grid-cols-4 h-full">
@@ -167,7 +167,7 @@ const CreatePriceAlert: React.FC = () => {
         </div>
 
         {/* Main Content */}
-        <div className="px-18 pb-18 space-y-18">
+        <div className="px-18 pb-18 space-y-18 overflow-x-hidden">
           {/* Tab Switcher - Same width as card below */}
           <div className="flex items-center justify-center">
             <div className="bg-bg-gray border border-gray-stroke rounded-switcher p-4.5 flex w-full max-w-[402px] relative">
@@ -237,7 +237,7 @@ const CreatePriceAlert: React.FC = () => {
                 <p className="font-jakarta font-medium text-xs text-text-dark">
                   Set Alert At:
                 </p>
-                <div className="flex gap-4.5">
+                <div className="flex gap-4.5 flex-wrap min-w-0">
                   {['-5%', '+5%', '+10%'].map((percent) => (
                     <button
                       key={percent}
