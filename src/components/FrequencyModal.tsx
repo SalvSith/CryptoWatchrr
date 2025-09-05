@@ -222,17 +222,17 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
           <div className="box-border flex flex-col gap-[8.998px] items-center justify-end p-[17.997px] relative shrink-0 w-full">
             
             {/* Alert me once - EXACT FIGMA */}
-            <div className="box-border flex items-center justify-between px-0 py-[8.998px] relative shrink-0 w-full">
+            <button
+              role="checkbox"
+              aria-checked={localFrequency === 'once'}
+              onClick={() => handleFrequencySelect('once')}
+              className="box-border flex items-center justify-between px-0 py-[8.998px] relative shrink-0 w-full hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
+            >
               <div className="font-jakarta font-medium text-[15.747px] leading-[26.995px] text-[#15171a] relative shrink-0">
                 <span>Alert me once</span>
                 <span className="font-jakarta font-normal text-gray-500"> (Once-off)</span>
               </div>
-              <button
-                role="checkbox"
-                aria-checked={localFrequency === 'once'}
-                onClick={() => handleFrequencySelect('once')}
-                className="flex gap-[8.998px] items-center justify-start relative shrink-0"
-              >
+              <div className="flex gap-[8.998px] items-center justify-start relative shrink-0">
                 <div className={`relative shrink-0 w-[22.496px] h-[22.496px] rounded-[6px] transition-all duration-200 ${
                   localFrequency === 'once' 
                     ? 'bg-[#256bfd]' 
@@ -252,21 +252,21 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
                     </div>
                   )}
                 </div>
-              </button>
-            </div>
+              </div>
+            </button>
 
             {/* Alert me every time - EXACT FIGMA */}
-            <div className="box-border flex items-center justify-between px-0 py-[8.998px] relative shrink-0 w-full">
+            <button
+              role="checkbox"
+              aria-checked={localFrequency === 'recurring'}
+              onClick={() => handleFrequencySelect('recurring')}
+              className="box-border flex items-center justify-between px-0 py-[8.998px] relative shrink-0 w-full hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
+            >
               <div className="font-jakarta font-medium text-[15.747px] leading-[26.995px] text-[#15171a] relative shrink-0">
                 <span>Alert me every time </span>
                 <span className="font-jakarta font-normal text-gray-500">(Recurring)</span>
               </div>
-              <button
-                role="checkbox"
-                aria-checked={localFrequency === 'recurring'}
-                onClick={() => handleFrequencySelect('recurring')}
-                className="flex gap-[8.998px] items-center justify-start relative shrink-0"
-              >
+              <div className="flex gap-[8.998px] items-center justify-start relative shrink-0">
                 <div className={`relative shrink-0 w-[22.496px] h-[22.496px] rounded-[6px] transition-all duration-200 ${
                   localFrequency === 'recurring' 
                     ? 'bg-[#256bfd]' 
@@ -286,8 +286,8 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
                     </div>
                   )}
                 </div>
-              </button>
-            </div>
+              </div>
+            </button>
           </div>
         </div>
       </div>
