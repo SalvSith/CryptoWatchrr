@@ -129,10 +129,17 @@ const CreatePriceAlert: React.FC = () => {
   const formatPrice = (value: string) => {
     // Remove non-numeric characters except decimal
     const numericValue = value.replace(/[^0-9.]/g, '');
-    // Format with commas
+    // Format with spaces
     const parts = numericValue.split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    const formattedNumber = parts.join('.');
+    
+    // Remove .00 at the end, but keep other decimals
+    let formattedNumber;
+    if (parts.length > 1 && parts[1] === '00') {
+      formattedNumber = parts[0]; // Remove .00
+    } else {
+      formattedNumber = parts.join('.'); // Keep other decimals
+    }
     
     // Add currency symbol based on selected fiat currency
     const currencySymbols: { [key: string]: string } = {
