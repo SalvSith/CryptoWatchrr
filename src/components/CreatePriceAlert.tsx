@@ -75,18 +75,6 @@ const CreatePriceAlert: React.FC = () => {
     return 'text-xs'; // 12px
   };
 
-  const calculateCurrentPriceFontSize = (price: number): string => {
-    const formattedText = formatPrice(price.toString());
-    const length = formattedText.length;
-    
-    // Scale down font size when price gets too long (12+ characters)
-    if (length <= 12) return 'text-xl'; // 20px - normal size
-    if (length <= 14) return 'text-lg'; // 18px - slightly smaller
-    if (length <= 16) return 'text-base'; // 16px - smaller
-    if (length <= 18) return 'text-sm'; // 14px - even smaller
-    return 'text-xs'; // 12px - smallest
-  };
-
   // Validation function to check if all required settings are filled
   const areAllSettingsFilled = (): boolean => {
     // Check if alert name is set (should always be set, but just in case)
@@ -173,6 +161,17 @@ const CreatePriceAlert: React.FC = () => {
     
     const symbol = currencySymbols[selectedFiatCurrency] || '$';
     return `${symbol}${formattedNumber}`;
+  };
+
+  const calculateAlertPriceFontSize = (formattedPrice: string): string => {
+    const length = formattedPrice.length;
+    
+    // Scale down font size when price gets too long to prevent overlap
+    if (length <= 12) return 'text-xl';      // 20px - default size
+    if (length <= 14) return 'text-lg';      // 18px - slightly smaller
+    if (length <= 16) return 'text-base';    // 16px - medium
+    if (length <= 18) return 'text-sm';      // 14px - small
+    return 'text-xs';                        // 12px - smallest
   };
 
   const handleUpdateNotifications = (push: boolean, email: boolean, sms: boolean) => {
@@ -375,7 +374,7 @@ const CreatePriceAlert: React.FC = () => {
                       Error loading price
                     </p>
                   ) : currentPriceData ? (
-                                     <p className={`font-jakarta font-medium ${calculateCurrentPriceFontSize(currentPriceData.currentPrice)} text-line-dark tracking-[-2px]`}>
+                                     <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
                    {formatPrice(currentPriceData.currentPrice.toString())}
                  </p>
                   ) : (
@@ -431,7 +430,7 @@ const CreatePriceAlert: React.FC = () => {
                     type="text"
                     value={formatPrice(alertPrice)}
                     onChange={handlePriceChange}
-                    className="font-jakarta font-medium text-xl text-text-dark tracking-[-2px] bg-transparent outline-none flex-1 min-w-0"
+                    className={`font-jakarta font-medium ${calculateAlertPriceFontSize(formatPrice(alertPrice))} text-text-dark tracking-[-2px] bg-transparent outline-none flex-1 min-w-0`}
                     placeholder="0.00"
                   />
                 </div>
