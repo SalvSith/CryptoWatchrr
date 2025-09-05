@@ -166,10 +166,16 @@ const CreatePriceAlert: React.FC = () => {
   const calculateAlertPriceFontSize = (formattedPrice: string): string => {
     const length = formattedPrice.length;
     
-    // Very subtle font scaling - only slightly smaller when needed
-    if (length <= 12) return 'text-xl';      // 20px - default size
-    if (length <= 15) return 'text-lg';      // 18px - just slightly smaller
-    return 'text-base';                      // 16px - minimal reduction
+    // Gradual scaling - calculate proportional font size to fit snugly
+    // Base size is 20px (text-xl), scale down gradually as length increases
+    if (length <= 10) return 'text-xl';      // 20px - plenty of space
+    if (length <= 12) return 'text-xl';      // 20px - still fits well
+    if (length <= 13) return 'text-[19px]';  // 19px - tiny reduction
+    if (length <= 14) return 'text-lg';      // 18px - small reduction  
+    if (length <= 15) return 'text-[17px]';  // 17px - gradual step
+    if (length <= 16) return 'text-base';    // 16px - still readable
+    if (length <= 17) return 'text-[15px]';  // 15px - snug fit
+    return 'text-sm';                        // 14px - maximum reduction for very long prices
   };
 
   const handleUpdateNotifications = (push: boolean, email: boolean, sms: boolean) => {
