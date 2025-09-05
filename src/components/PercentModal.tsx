@@ -216,8 +216,6 @@ const PercentModal: React.FC<PercentModalProps> = ({
               <div className="bg-[#f4f4f6] flex gap-[17.997px] h-[56.239px] items-center justify-start px-[17.997px] py-[13.497px] relative rounded-[11px] shrink-0 w-full border border-[#e1e3e6]">
                 <input
                   type="text"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
                   value={localPercentage}
                   onChange={(e) => setLocalPercentage(e.target.value)}
                   placeholder="0%"
