@@ -226,7 +226,6 @@ const AlertNameModal: React.FC<AlertNameModalProps> = ({
                   onChange={(e) => setAlertName(e.target.value)}
                   className="basis-0 font-jakarta font-normal text-[15.75px] leading-[26.995px] text-[#15171a] bg-transparent outline-none grow min-h-px min-w-px relative shrink-0 w-full"
                   placeholder="Bitcoin"
-                  autoFocus
                 />
               </div>
             </div>
