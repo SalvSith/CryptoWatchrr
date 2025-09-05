@@ -133,12 +133,19 @@ const CreatePriceAlert: React.FC = () => {
     const parts = numericValue.split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     
+    // Limit decimal places to maximum 2 digits
+    if (parts.length > 1) {
+      parts[1] = parts[1].substring(0, 2);
+    }
+    
     // Remove .00 at the end, but keep other decimals
     let formattedNumber;
     if (parts.length > 1 && parts[1] === '00') {
       formattedNumber = parts[0]; // Remove .00
+    } else if (parts.length > 1 && parts[1]) {
+      formattedNumber = `${parts[0]}.${parts[1]}`; // Keep other decimals (max 2 digits)
     } else {
-      formattedNumber = parts.join('.'); // Keep other decimals
+      formattedNumber = parts[0]; // No decimals
     }
     
     // Add currency symbol based on selected fiat currency
@@ -411,7 +418,7 @@ const CreatePriceAlert: React.FC = () => {
                     type="text"
                     value={formatPrice(alertPrice)}
                     onChange={handlePriceChange}
-                    className="font-jakarta font-medium text-xl text-text-dark tracking-[-2px] bg-transparent outline-none max-w-[200px]"
+                    className="font-jakarta font-medium text-xl text-text-dark tracking-[-2px] bg-transparent outline-none flex-1 min-w-0"
                     placeholder="0.00"
                   />
                 </div>
