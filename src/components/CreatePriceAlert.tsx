@@ -289,33 +289,13 @@ const CreatePriceAlert: React.FC = () => {
   };
 
   return (
-    <div 
-      className="min-h-screen w-screen max-w-[100vw] overflow-x-hidden overflow-y-auto" 
-      style={{ 
-        backgroundColor: '#FBFBFB',
-        position: 'relative',
-        width: '100vw',
-        maxWidth: '100vw',
-        overflowX: 'hidden',
-        overflowY: 'auto',
-        margin: 0,
-        padding: 0
-      }}
-    >
+    <div className="min-h-screen relative w-full max-w-[100vw] mx-auto overflow-x-hidden" style={{ backgroundColor: '#FBFBFB' }}>
+
       {/* Content Container */}
-      <div 
-        className="relative z-10 flex flex-col w-full max-w-full overflow-x-hidden"
-        style={{
-          width: '100vw',
-          maxWidth: '100vw',
-          overflowX: 'hidden',
-          margin: 0,
-          padding: 0
-        }}
-      >
+      <div className="relative z-10 flex flex-col">
         {/* Header */}
         <div className="bg-bg-white/95 backdrop-blur-sm sticky top-0 z-20 pt-0.5">
-          <div className="flex items-center justify-between h-14 px-4 sm:px-18 py-1.5">
+          <div className="flex items-center justify-between h-14 px-18 py-1.5">
             <div className="w-[62px] flex justify-start">
               <button className="p-9 -m-9 hover:bg-gray-100 rounded-lg transition-colors">
                 <img src={assets.iconArrowLeft} alt="Back" className="w-27 h-27" />
@@ -329,7 +309,7 @@ const CreatePriceAlert: React.FC = () => {
         </div>
 
         {/* Main Content */}
-        <div className="px-4 sm:px-18 pb-18 space-y-18 overflow-x-hidden w-full max-w-full">
+        <div className="px-18 pb-18 space-y-18 overflow-x-hidden">
           {/* Tab Switcher - Same width as card below */}
           <div className="flex items-center justify-center">
             <div className="bg-bg-gray border border-gray-stroke rounded-switcher p-[4.499px] flex w-full max-w-[402px] relative h-[44.992px]">
@@ -394,7 +374,7 @@ const CreatePriceAlert: React.FC = () => {
                 </div>
                                 <button
                   onClick={() => setIsCryptocurrencyModalOpen(true)}
-                  className="flex items-center gap-[7px] hover:bg-gray-50 px-2 py-1 rounded-lg transition-colors absolute right-0"
+                  className="flex items-center gap-[7px] hover:bg-gray-50 px-2 py-1 rounded-lg transition-colors absolute right-[-16px]"
                 >
                   <img src={cryptocurrencies[selectedCrypto]?.icon || assets.btcIcon} alt={selectedCrypto} className="w-[30px] h-[30px] rounded-full" />
                   <span className="font-jakarta font-medium text-sm text-gray-500">{selectedCrypto}</span>
@@ -445,7 +425,7 @@ const CreatePriceAlert: React.FC = () => {
                 </div>
                 <button 
                   onClick={() => setIsFiatCurrencyModalOpen(true)}
-                  className="flex items-center gap-[7px] hover:bg-white/50 px-2 py-1 rounded-lg transition-colors absolute right-0"
+                  className="flex items-center gap-[7px] hover:bg-white/50 px-2 py-1 rounded-lg transition-colors absolute right-[-16px]"
                 >
                   <img src={fiatCurrencies[selectedFiatCurrency]?.flag || assets.usdFlag} alt={selectedFiatCurrency} className="w-[30px] h-[30px]" />
                   <span className="font-jakarta font-medium text-sm text-gray-500">{selectedFiatCurrency}</span>
