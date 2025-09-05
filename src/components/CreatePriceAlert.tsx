@@ -63,16 +63,47 @@ const CreatePriceAlert: React.FC = () => {
     return `${sign}${difference.toFixed(1)}%`;
   };
 
-  const calculateFontSize = (text: string): string => {
+  const calculateDynamicFontSize = (text: string): { fontSize: string; style?: React.CSSProperties } => {
     const formattedText = formatPrice(text);
     const length = formattedText.length;
     
-    // Base font size is text-xl (20px), scale down as text gets longer
-    if (length <= 10) return 'text-xl'; // 20px
-    if (length <= 12) return 'text-lg'; // 18px
-    if (length <= 15) return 'text-base'; // 16px
-    if (length <= 18) return 'text-sm'; // 14px
-    return 'text-xs'; // 12px
+    // Gradual scaling system - much more gentle than before
+    // Base size: 20px (text-xl), gradually scale down
+    
+    if (length <= 8) {
+      // Short text: Full size
+      return { fontSize: 'text-xl' }; // 20px
+    } else if (length <= 10) {
+      // Slightly longer: Minor reduction
+      return { fontSize: 'text-lg' }; // 18px
+    } else if (length <= 12) {
+      // Getting longer: Custom size between lg and base
+      return { 
+        fontSize: '', 
+        style: { fontSize: '17px' } // Custom size
+      };
+    } else if (length <= 14) {
+      // Longer: Base size
+      return { fontSize: 'text-base' }; // 16px
+    } else if (length <= 16) {
+      // Much longer: Custom size
+      return { 
+        fontSize: '', 
+        style: { fontSize: '15px' } // Custom size
+      };
+    } else if (length <= 18) {
+      // Very long: Small but still readable
+      return { fontSize: 'text-sm' }; // 14px
+    } else if (length <= 20) {
+      // Extremely long: Custom size
+      return { 
+        fontSize: '', 
+        style: { fontSize: '13px' } // Custom size
+      };
+    } else {
+      // Maximum length: Smallest readable size
+      return { fontSize: 'text-xs' }; // 12px
+    }
   };
 
   // Validation function to check if all required settings are filled
@@ -161,21 +192,6 @@ const CreatePriceAlert: React.FC = () => {
     
     const symbol = currencySymbols[selectedFiatCurrency] || '$';
     return `${symbol}${formattedNumber}`;
-  };
-
-  const calculateAlertPriceFontSize = (formattedPrice: string): string => {
-    const length = formattedPrice.length;
-    
-    // Gradual scaling - calculate proportional font size to fit snugly
-    // Base size is 20px (text-xl), scale down gradually as length increases
-    if (length <= 10) return 'text-xl';      // 20px - plenty of space
-    if (length <= 12) return 'text-xl';      // 20px - still fits well
-    if (length <= 13) return 'text-[19px]';  // 19px - tiny reduction
-    if (length <= 14) return 'text-lg';      // 18px - small reduction  
-    if (length <= 15) return 'text-[17px]';  // 17px - gradual step
-    if (length <= 16) return 'text-base';    // 16px - still readable
-    if (length <= 17) return 'text-[15px]';  // 15px - snug fit
-    return 'text-sm';                        // 14px - maximum reduction for very long prices
   };
 
   const handleUpdateNotifications = (push: boolean, email: boolean, sms: boolean) => {
@@ -434,7 +450,8 @@ const CreatePriceAlert: React.FC = () => {
                     type="text"
                     value={formatPrice(alertPrice)}
                     onChange={handlePriceChange}
-                    className={`font-jakarta font-medium ${calculateAlertPriceFontSize(formatPrice(alertPrice))} text-text-dark tracking-[-2px] bg-transparent outline-none flex-1 min-w-0`}
+                    className={`font-jakarta font-medium text-text-dark tracking-[-2px] bg-transparent outline-none flex-1 min-w-0 ${calculateDynamicFontSize(alertPrice).fontSize}`}
+                    style={calculateDynamicFontSize(alertPrice).style}
                     placeholder="0.00"
                   />
                 </div>
