@@ -350,7 +350,7 @@ const CreatePriceAlert: React.FC = () => {
                     </p>
                   ) : currentPriceData ? (
                                      <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
-                   {CryptoApiService.formatPrice(currentPriceData.currentPrice, selectedFiatCurrency)}
+                   {formatPrice(currentPriceData.currentPrice.toString())}
                  </p>
                   ) : (
                     <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
