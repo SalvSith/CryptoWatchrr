@@ -1,8 +1,8 @@
-// CoinGecko API service for fetching cryptocurrency prices
+// CoinGecko API service for fetching cryptocurrency prices (free tier)
 const COINGECKO_API_BASE = 'https://api.coingecko.com/api/v3';
 
-// CoinCap API as backup
-const COINCAP_API_BASE = 'https://api.coincap.io/v2';
+// Alternative free API as backup (CryptoCurrency API)
+const ALTERNATIVE_API_BASE = 'https://api.coinlore.net/api';
 
 // Map our crypto symbols to CoinGecko IDs
 const CRYPTO_ID_MAP: { [key: string]: string } = {
@@ -14,14 +14,14 @@ const CRYPTO_ID_MAP: { [key: string]: string } = {
   'DOGE': 'dogecoin',
 };
 
-// Map our crypto symbols to CoinCap IDs (backup API)
-const COINCAP_ID_MAP: { [key: string]: string } = {
-  'BTC': 'bitcoin',
-  'ETH': 'ethereum',
-  'XRP': 'xrp',
-  'BNB': 'binance-coin',
-  'SOL': 'solana',
-  'DOGE': 'dogecoin',
+// Map our crypto symbols to CoinLore IDs (backup API)
+const COINLORE_ID_MAP: { [key: string]: string } = {
+  'BTC': '90',      // Bitcoin
+  'ETH': '80',      // Ethereum  
+  'XRP': '58',      // Ripple
+  'BNB': '2710',    // Binance Coin
+  'SOL': '48543',   // Solana
+  'DOGE': '2',      // Dogecoin
 };
 
 // Map our fiat currencies to CoinGecko supported currencies
@@ -64,10 +64,10 @@ export class CryptoApiService {
       return primaryResult;
     }
     
-    console.warn('Primary API (CoinGecko) failed, trying backup API (CoinCap):', primaryResult.error);
+    console.warn('Primary API (CoinGecko) failed, trying backup API (CoinLore):', primaryResult.error);
     
-    // If primary fails, try backup API (CoinCap)
-    const backupResult = await this.getCurrentPriceFromCoinCap(cryptoSymbol, fiatCurrency);
+    // If primary fails, try backup API (CoinLore)
+    const backupResult = await this.getCurrentPriceFromCoinLore(cryptoSymbol, fiatCurrency);
     
     if (backupResult.success) {
       return backupResult;
@@ -158,11 +158,11 @@ export class CryptoApiService {
   }
 
   /**
-   * Fetch price from CoinCap API (Backup)
+   * Fetch price from CoinLore API (Backup)
    */
-  private static async getCurrentPriceFromCoinCap(cryptoSymbol: string, fiatCurrency: string = 'USD'): Promise<ApiResponse> {
+  private static async getCurrentPriceFromCoinLore(cryptoSymbol: string, fiatCurrency: string = 'USD'): Promise<ApiResponse> {
     try {
-      const cryptoId = COINCAP_ID_MAP[cryptoSymbol.toUpperCase()];
+      const cryptoId = COINLORE_ID_MAP[cryptoSymbol.toUpperCase()];
       
       if (!cryptoId) {
         return {
@@ -171,10 +171,10 @@ export class CryptoApiService {
         };
       }
 
-      // CoinCap only provides USD prices, so we'll need to convert for other currencies
-      const url = `${COINCAP_API_BASE}/assets/${cryptoId}`;
+      // CoinLore provides USD prices, we'll convert for other currencies
+      const url = `${ALTERNATIVE_API_BASE}/ticker/?id=${cryptoId}`;
       
-      console.log(`Trying CoinCap API: ${url}`); // Debug log
+      console.log(`Trying CoinLore API: ${url}`); // Debug log
       
       const response = await fetch(url, { 
         method: 'GET',
@@ -185,68 +185,23 @@ export class CryptoApiService {
         signal: AbortSignal.timeout(10000) // 10 second timeout
       });
       
-      if (response.status === 404) {
-        // Try alternative endpoint or ID mapping
-        console.log(`CoinCap 404 for ${cryptoId}, trying alternative...`);
-        const altUrl = `${COINCAP_API_BASE}/assets`;
-        const altResponse = await fetch(altUrl, { 
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-          },
-          signal: AbortSignal.timeout(10000)
-        });
-        
-        if (altResponse.ok) {
-          const altData = await altResponse.json();
-          const asset = altData.data?.find((a: any) => 
-            a.symbol?.toLowerCase() === cryptoSymbol.toLowerCase() ||
-            a.id?.toLowerCase() === cryptoId.toLowerCase()
-          );
-          
-          if (asset) {
-            let currentPrice = parseFloat(asset.priceUsd);
-            
-            if (fiatCurrency.toUpperCase() !== 'USD') {
-              const conversionRate = await this.getSimpleCurrencyConversion(fiatCurrency);
-              currentPrice = currentPrice * conversionRate;
-            }
-
-            const priceData: CryptoPriceData = {
-              symbol: cryptoSymbol.toUpperCase(),
-              name: this.getCryptoName(cryptoSymbol),
-              currentPrice: currentPrice,
-              priceChangePercentage24h: parseFloat(asset.changePercent24Hr) || 0,
-              lastUpdated: new Date().toISOString()
-            };
-
-            return {
-              success: true,
-              data: priceData
-            };
-          }
-        }
-        
-        throw new Error(`CoinCap API: Asset not found for ${cryptoSymbol}`);
-      }
-      
       if (!response.ok) {
-        throw new Error(`CoinCap API request failed: ${response.status} ${response.statusText}`);
+        throw new Error(`CoinLore API request failed: ${response.status} ${response.statusText}`);
       }
       
       const result = await response.json();
-      const cryptoData = result.data;
+      const cryptoData = result[0]; // CoinLore returns an array
       
       if (!cryptoData) {
         return {
           success: false,
-          error: `No data found for ${cryptoSymbol} on CoinCap`
+          error: `No data found for ${cryptoSymbol} on CoinLore`
         };
       }
 
-      let currentPrice = parseFloat(cryptoData.priceUsd);
+      let currentPrice = parseFloat(cryptoData.price_usd);
       
-      // Convert USD to other currencies if needed (simplified conversion rates)
+      // Convert USD to other currencies if needed
       if (fiatCurrency.toUpperCase() !== 'USD') {
         const conversionRate = await this.getSimpleCurrencyConversion(fiatCurrency);
         currentPrice = currentPrice * conversionRate;
@@ -256,8 +211,8 @@ export class CryptoApiService {
         symbol: cryptoSymbol.toUpperCase(),
         name: this.getCryptoName(cryptoSymbol),
         currentPrice: currentPrice,
-        priceChangePercentage24h: parseFloat(cryptoData.changePercent24Hr) || 0,
-        lastUpdated: new Date().toISOString() // CoinCap doesn't provide exact timestamp
+        priceChangePercentage24h: parseFloat(cryptoData.percent_change_24h) || 0,
+        lastUpdated: new Date().toISOString() // CoinLore doesn't provide exact timestamp
       };
 
       return {
@@ -265,10 +220,10 @@ export class CryptoApiService {
         data: priceData
       };
     } catch (error) {
-      console.error('CoinCap API error:', error);
+      console.error('CoinLore API error:', error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'CoinCap API error'
+        error: error instanceof Error ? error.message : 'CoinLore API error'
       };
     }
   }
