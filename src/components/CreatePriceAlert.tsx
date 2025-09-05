@@ -132,7 +132,21 @@ const CreatePriceAlert: React.FC = () => {
     // Format with commas
     const parts = numericValue.split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    return parts.join('.');
+    const formattedNumber = parts.join('.');
+    
+    // Add currency symbol based on selected fiat currency
+    const currencySymbols: { [key: string]: string } = {
+      'USD': '$',
+      'EUR': '€',
+      'GBP': '£',
+      'CAD': 'C$',
+      'AUD': 'A$',
+      'CHF': 'CHF ',
+      'ZAR': 'R',
+    };
+    
+    const symbol = currencySymbols[selectedFiatCurrency] || '$';
+    return `${symbol}${formattedNumber}`;
   };
 
   const handleUpdateNotifications = (push: boolean, email: boolean, sms: boolean) => {
