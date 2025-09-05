@@ -286,7 +286,7 @@ const CreatePriceAlert: React.FC = () => {
               {/* Sliding background */}
               <div 
                 className={`absolute top-[4.499px] bottom-[4.499px] w-[calc(50%-2.25px)] bg-bg-white rounded-[8px] shadow-sm transition-transform duration-300 ease-out ${
-                  activeTab === 'crypto' ? 'translate-x-[calc(100%+4.499px)]' : 'translate-x-0'
+                  activeTab === 'crypto' ? 'translate-x-[calc(100%+2.25px)]' : 'translate-x-0'
                 }`}
               />
               <button
