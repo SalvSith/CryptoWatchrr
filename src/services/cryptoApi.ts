@@ -50,6 +50,8 @@ export interface ApiResponse {
 }
 
 export class CryptoApiService {
+  private static lastCoinGeckoRequest = 0;
+  private static readonly COINGECKO_RATE_LIMIT_MS = 1000; // 1 second between requests
   /**
    * Fetch current price for a cryptocurrency in specified fiat currency
    * Uses CoinGecko as primary API and CoinCap as backup
@@ -83,6 +85,17 @@ export class CryptoApiService {
    */
   private static async getCurrentPriceFromCoinGecko(cryptoSymbol: string, fiatCurrency: string = 'USD'): Promise<ApiResponse> {
     try {
+      // Rate limiting: wait if last request was too recent
+      const now = Date.now();
+      const timeSinceLastRequest = now - this.lastCoinGeckoRequest;
+      if (timeSinceLastRequest < this.COINGECKO_RATE_LIMIT_MS) {
+        const waitTime = this.COINGECKO_RATE_LIMIT_MS - timeSinceLastRequest;
+        console.log(`Rate limiting: waiting ${waitTime}ms before CoinGecko request`);
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+      }
+      
+      this.lastCoinGeckoRequest = Date.now();
+      
       const cryptoId = CRYPTO_ID_MAP[cryptoSymbol.toUpperCase()];
       const fiatId = FIAT_CURRENCY_MAP[fiatCurrency.toUpperCase()] || 'usd';
       
@@ -103,6 +116,11 @@ export class CryptoApiService {
         // Add timeout
         signal: AbortSignal.timeout(10000) // 10 second timeout
       });
+      
+      // Check for rate limiting specifically
+      if (response.status === 429) {
+        throw new Error(`CoinGecko API rate limit exceeded. Please try again later.`);
+      }
       
       if (!response.ok) {
         throw new Error(`CoinGecko API request failed: ${response.status} ${response.statusText}`);
@@ -156,6 +174,8 @@ export class CryptoApiService {
       // CoinCap only provides USD prices, so we'll need to convert for other currencies
       const url = `${COINCAP_API_BASE}/assets/${cryptoId}`;
       
+      console.log(`Trying CoinCap API: ${url}`); // Debug log
+      
       const response = await fetch(url, { 
         method: 'GET',
         headers: {
@@ -164,6 +184,51 @@ export class CryptoApiService {
         // Add timeout
         signal: AbortSignal.timeout(10000) // 10 second timeout
       });
+      
+      if (response.status === 404) {
+        // Try alternative endpoint or ID mapping
+        console.log(`CoinCap 404 for ${cryptoId}, trying alternative...`);
+        const altUrl = `${COINCAP_API_BASE}/assets`;
+        const altResponse = await fetch(altUrl, { 
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+          },
+          signal: AbortSignal.timeout(10000)
+        });
+        
+        if (altResponse.ok) {
+          const altData = await altResponse.json();
+          const asset = altData.data?.find((a: any) => 
+            a.symbol?.toLowerCase() === cryptoSymbol.toLowerCase() ||
+            a.id?.toLowerCase() === cryptoId.toLowerCase()
+          );
+          
+          if (asset) {
+            let currentPrice = parseFloat(asset.priceUsd);
+            
+            if (fiatCurrency.toUpperCase() !== 'USD') {
+              const conversionRate = await this.getSimpleCurrencyConversion(fiatCurrency);
+              currentPrice = currentPrice * conversionRate;
+            }
+
+            const priceData: CryptoPriceData = {
+              symbol: cryptoSymbol.toUpperCase(),
+              name: this.getCryptoName(cryptoSymbol),
+              currentPrice: currentPrice,
+              priceChangePercentage24h: parseFloat(asset.changePercent24Hr) || 0,
+              lastUpdated: new Date().toISOString()
+            };
+
+            return {
+              success: true,
+              data: priceData
+            };
+          }
+        }
+        
+        throw new Error(`CoinCap API: Asset not found for ${cryptoSymbol}`);
+      }
       
       if (!response.ok) {
         throw new Error(`CoinCap API request failed: ${response.status} ${response.statusText}`);
