@@ -264,15 +264,7 @@ const CreatePriceAlert: React.FC = () => {
   };
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    
-    // Remove currency symbols and keep only numbers and decimal
-    if (activeTab === 'crypto') {
-      value = value.replace(/[₿]/g, '').replace(/[^0-9.]/g, '');
-    } else {
-      value = value.replace(/[^0-9.]/g, '');
-    }
-    
+    const value = e.target.value.replace(/[^0-9.]/g, '');
     setAlertPrice(value);
     // Clear selected percentage when manually typing
     setSelectedPercentage(null);
@@ -319,7 +311,7 @@ const CreatePriceAlert: React.FC = () => {
         {/* Main Content */}
         <div className="px-18 pb-18 space-y-18 overflow-x-hidden">
           {/* Tab Switcher - Same width as card below */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center hidden">
             <div className="bg-bg-gray border border-gray-stroke rounded-switcher p-[4.499px] flex w-full max-w-[402px] relative h-[44.992px]">
               {/* Sliding background */}
               <div 
@@ -355,7 +347,7 @@ const CreatePriceAlert: React.FC = () => {
             {/* Current Price Section */}
             <div className="px-13.5 py-9 rounded-card">
               <p className="font-jakarta font-medium text-xs text-gray-500 mb-1">
-                Current: {activeTab === 'crypto' ? `₿1.00:` : `${fiatCurrencies[selectedFiatCurrency]?.code || 'USD'}1.00:`}
+                Current: ₿1.00:
               </p>
               <div className="flex items-center justify-between relative">
                 <div className="flex items-center gap-2">
@@ -371,15 +363,12 @@ const CreatePriceAlert: React.FC = () => {
                       Error loading price
                     </p>
                   ) : currentPriceData ? (
-                    <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
-                      {activeTab === 'crypto' 
-                        ? `₿1.00` 
-                        : formatPrice(currentPriceData.currentPrice.toString())
-                      }
-                    </p>
+                                     <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
+                   {formatPrice(currentPriceData.currentPrice.toString())}
+                 </p>
                   ) : (
                     <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
-                      {activeTab === 'crypto' ? '₿1.00' : '₿112,500.00'}
+                      ₿112,500.00
                     </p>
                   )}
                 </div>
@@ -398,7 +387,7 @@ const CreatePriceAlert: React.FC = () => {
             <div className="bg-bg-gray px-13.5 py-9 rounded-card">
               <div className="flex items-center justify-between mb-1">
                 <p className="font-jakarta font-medium text-xs text-text-dark">
-                  Set At: {activeTab === 'crypto' ? '(in crypto)' : '(in fiat)'}
+                  Set At:
                 </p>
                 <div className="flex gap-4.5 flex-wrap min-w-0">
                   {['-5%', '+5%', '+10%'].map((percent) => (
@@ -428,10 +417,10 @@ const CreatePriceAlert: React.FC = () => {
                 <div className="flex items-center gap-[3px]">
                   <input
                     type="text"
-                    value={activeTab === 'crypto' ? `₿${alertPrice}` : formatPrice(alertPrice)}
+                    value={formatPrice(alertPrice)}
                     onChange={handlePriceChange}
                     className="font-jakarta font-medium text-xl text-text-dark tracking-[-2px] bg-transparent outline-none flex-1 min-w-0"
-                    placeholder={activeTab === 'crypto' ? '₿0.00' : '0.00'}
+                    placeholder="0.00"
                   />
                 </div>
                 <button 
