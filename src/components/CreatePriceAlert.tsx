@@ -64,38 +64,37 @@ const CreatePriceAlert: React.FC = () => {
   };
 
   const calculateDynamicFontSize = (text: string): { fontSize: string; style?: React.CSSProperties } => {
-    const formattedText = formatPrice(text);
-    const length = formattedText.length;
+    // Use RAW input length, NOT formatted display length!
+    // The formatted version adds currency symbols and spaces which makes it longer
+    const rawLength = text.replace(/[^0-9.]/g, '').length; // Only count actual numbers
     
-    // CONSERVATIVE scaling - only reduce by small amounts to prevent overlap
-    // Base size: 20px (text-xl), MINIMAL reductions only when absolutely necessary
-    
-    if (length <= 12) {
-      // Normal lengths: Keep full size
+    // Scale based on the ACTUAL input size, not the display format
+    if (rawLength <= 8) {
+      // Normal numbers: Keep full size (e.g., "12345678")
       return { fontSize: 'text-xl' }; // 20px - NO CHANGE
-    } else if (length <= 15) {
-      // Getting longer: Tiny reduction
+    } else if (rawLength <= 10) {
+      // Getting longer: Tiny reduction (e.g., "1234567890")
       return { 
         fontSize: '', 
-        style: { fontSize: '19px' } // Only 1px smaller - barely noticeable
+        style: { fontSize: '19px' } // Only 1px smaller
       };
-    } else if (length <= 18) {
-      // Long text: Small reduction
+    } else if (rawLength <= 12) {
+      // Long numbers: Small reduction (e.g., "123456789012")
       return { 
         fontSize: '', 
-        style: { fontSize: '18px' } // Only 2px smaller - still very readable
+        style: { fontSize: '18px' } // Only 2px smaller
       };
-    } else if (length <= 22) {
+    } else if (rawLength <= 15) {
       // Very long: Moderate reduction
       return { 
         fontSize: '', 
-        style: { fontSize: '17px' } // 3px smaller - still readable
+        style: { fontSize: '17px' } // 3px smaller
       };
     } else {
       // Extremely long: Final reduction
       return { 
         fontSize: '', 
-        style: { fontSize: '16px' } // 4px smaller maximum - never tiny
+        style: { fontSize: '16px' } // 4px smaller maximum
       };
     }
   };
