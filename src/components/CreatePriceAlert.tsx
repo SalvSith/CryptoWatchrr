@@ -289,10 +289,30 @@ const CreatePriceAlert: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative w-full max-w-[100vw] mx-auto overflow-x-hidden" style={{ backgroundColor: '#FBFBFB' }}>
-
+    <div 
+      className="min-h-screen w-screen max-w-[100vw] overflow-x-hidden overflow-y-auto" 
+      style={{ 
+        backgroundColor: '#FBFBFB',
+        position: 'relative',
+        width: '100vw',
+        maxWidth: '100vw',
+        overflowX: 'hidden',
+        overflowY: 'auto',
+        margin: 0,
+        padding: 0
+      }}
+    >
       {/* Content Container */}
-      <div className="relative z-10 flex flex-col w-full max-w-full overflow-x-hidden">
+      <div 
+        className="relative z-10 flex flex-col w-full max-w-full overflow-x-hidden"
+        style={{
+          width: '100vw',
+          maxWidth: '100vw',
+          overflowX: 'hidden',
+          margin: 0,
+          padding: 0
+        }}
+      >
         {/* Header */}
         <div className="bg-bg-white/95 backdrop-blur-sm sticky top-0 z-20 pt-0.5">
           <div className="flex items-center justify-between h-14 px-4 sm:px-18 py-1.5">
