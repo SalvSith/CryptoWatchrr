@@ -292,7 +292,7 @@ const CreatePriceAlert: React.FC = () => {
     <div className="min-h-screen relative w-full max-w-[100vw] mx-auto overflow-x-hidden" style={{ backgroundColor: '#FBFBFB' }}>
 
       {/* Content Container */}
-      <div className="relative z-10 flex flex-col">
+      <div className="relative z-10 flex flex-col w-full max-w-full overflow-x-hidden">
         {/* Header */}
         <div className="bg-bg-white/95 backdrop-blur-sm sticky top-0 z-20 pt-0.5">
           <div className="flex items-center justify-between h-14 px-18 py-1.5">
@@ -309,7 +309,7 @@ const CreatePriceAlert: React.FC = () => {
         </div>
 
         {/* Main Content */}
-        <div className="px-18 pb-18 space-y-18 overflow-x-hidden">
+        <div className="px-18 pb-18 space-y-18 overflow-x-hidden w-full max-w-full">
           {/* Tab Switcher - Same width as card below */}
           <div className="flex items-center justify-center">
             <div className="bg-bg-gray border border-gray-stroke rounded-switcher p-[4.499px] flex w-full max-w-[402px] relative h-[44.992px]">
