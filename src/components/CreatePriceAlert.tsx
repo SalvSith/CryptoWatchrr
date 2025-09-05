@@ -268,13 +268,15 @@ const CreatePriceAlert: React.FC = () => {
         {/* Header */}
         <div className="bg-bg-white/95 backdrop-blur-sm sticky top-0 z-20 pt-0.5">
           <div className="flex items-center justify-between h-14 px-18 py-1.5">
-            <button className="p-9 -m-9 hover:bg-gray-100 rounded-lg transition-colors">
-              <img src={assets.iconArrowLeft} alt="Back" className="w-27 h-27" />
-            </button>
+            <div className="w-[62px] flex justify-start">
+              <button className="p-9 -m-9 hover:bg-gray-100 rounded-lg transition-colors">
+                <img src={assets.iconArrowLeft} alt="Back" className="w-27 h-27" />
+              </button>
+            </div>
             <h1 className="font-jakarta font-medium text-lg text-text-black">
               Create Price Alert
             </h1>
-            <div className="w-[44px]"></div>
+            <div className="w-[62px]"></div>
           </div>
         </div>
 
