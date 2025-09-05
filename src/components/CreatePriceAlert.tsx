@@ -395,7 +395,7 @@ const CreatePriceAlert: React.FC = () => {
                       key={percent}
                       onClick={() => applyPercentage(parseInt(percent))}
                       className={`px-13.5 py-2.25 bg-bg-white border border-gray-stroke rounded-select font-jakarta font-medium text-xs hover:bg-gray-50 transition-colors ${
-                        selectedPercentage === percent ? 'border-text-primary text-text-primary' : 'text-text-black'
+                        selectedPercentage === percent && !isCustomPercentage ? 'border-text-primary text-text-primary' : 'text-text-black'
                       }`}
                     >
                       {percent}
@@ -404,7 +404,8 @@ const CreatePriceAlert: React.FC = () => {
                   <button 
                     onClick={() => setIsPercentModalOpen(true)}
                     className={`px-13.5 py-2.25 bg-bg-white border rounded-[7px] font-jakarta font-medium text-xs hover:bg-gray-50 transition-colors ${
-                      calculatePercentageDifference(alertPrice) !== 'Set %' 
+                      (calculatePercentageDifference(alertPrice) !== 'Set %' && isCustomPercentage) || 
+                      (calculatePercentageDifference(alertPrice) !== 'Set %' && !selectedPercentage)
                         ? 'border-text-primary text-text-primary' 
                         : 'border-gray-stroke text-text-black'
                     }`}>
