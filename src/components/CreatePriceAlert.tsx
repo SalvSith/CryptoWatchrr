@@ -75,6 +75,18 @@ const CreatePriceAlert: React.FC = () => {
     return 'text-xs'; // 12px
   };
 
+  const calculateCurrentPriceFontSize = (price: number): string => {
+    const formattedText = formatPrice(price.toString());
+    const length = formattedText.length;
+    
+    // Scale down font size when price gets too long (12+ characters)
+    if (length <= 12) return 'text-xl'; // 20px - normal size
+    if (length <= 14) return 'text-lg'; // 18px - slightly smaller
+    if (length <= 16) return 'text-base'; // 16px - smaller
+    if (length <= 18) return 'text-sm'; // 14px - even smaller
+    return 'text-xs'; // 12px - smallest
+  };
+
   // Validation function to check if all required settings are filled
   const areAllSettingsFilled = (): boolean => {
     // Check if alert name is set (should always be set, but just in case)
@@ -363,7 +375,7 @@ const CreatePriceAlert: React.FC = () => {
                       Error loading price
                     </p>
                   ) : currentPriceData ? (
-                                     <p className="font-jakarta font-medium text-xl text-line-dark tracking-[-2px]">
+                                     <p className={`font-jakarta font-medium ${calculateCurrentPriceFontSize(currentPriceData.currentPrice)} text-line-dark tracking-[-2px]`}>
                    {formatPrice(currentPriceData.currentPrice.toString())}
                  </p>
                   ) : (
