@@ -63,40 +63,16 @@ const CreatePriceAlert: React.FC = () => {
     return `${sign}${difference.toFixed(1)}%`;
   };
 
-  const calculateDynamicFontSize = (text: string): { fontSize: string; style?: React.CSSProperties } => {
-    // Use RAW input length, NOT formatted display length!
-    // The formatted version adds currency symbols and spaces which makes it longer
-    const rawLength = text.replace(/[^0-9.]/g, '').length; // Only count actual numbers
+  const calculateFontSize = (text: string): string => {
+    const formattedText = formatPrice(text);
+    const length = formattedText.length;
     
-    // Scale based on the ACTUAL input size, not the display format
-    if (rawLength <= 8) {
-      // Normal numbers: Keep full size (e.g., "12345678")
-      return { fontSize: 'text-xl' }; // 20px - NO CHANGE
-    } else if (rawLength <= 10) {
-      // Getting longer: Tiny reduction (e.g., "1234567890")
-      return { 
-        fontSize: '', 
-        style: { fontSize: '19px' } // Only 1px smaller
-      };
-    } else if (rawLength <= 12) {
-      // Long numbers: Small reduction (e.g., "123456789012")
-      return { 
-        fontSize: '', 
-        style: { fontSize: '18px' } // Only 2px smaller
-      };
-    } else if (rawLength <= 15) {
-      // Very long: Moderate reduction
-      return { 
-        fontSize: '', 
-        style: { fontSize: '17px' } // 3px smaller
-      };
-    } else {
-      // Extremely long: Final reduction
-      return { 
-        fontSize: '', 
-        style: { fontSize: '16px' } // 4px smaller maximum
-      };
-    }
+    // Base font size is text-xl (20px), scale down as text gets longer
+    if (length <= 10) return 'text-xl'; // 20px
+    if (length <= 12) return 'text-lg'; // 18px
+    if (length <= 15) return 'text-base'; // 16px
+    if (length <= 18) return 'text-sm'; // 14px
+    return 'text-xs'; // 12px
   };
 
   // Validation function to check if all required settings are filled
@@ -443,8 +419,7 @@ const CreatePriceAlert: React.FC = () => {
                     type="text"
                     value={formatPrice(alertPrice)}
                     onChange={handlePriceChange}
-                    className={`font-jakarta font-medium text-text-dark tracking-[-2px] bg-transparent outline-none flex-1 min-w-0 ${calculateDynamicFontSize(alertPrice).fontSize}`}
-                    style={calculateDynamicFontSize(alertPrice).style}
+                    className="font-jakarta font-medium text-xl text-text-dark tracking-[-2px] bg-transparent outline-none flex-1 min-w-0"
                     placeholder="0.00"
                   />
                 </div>
