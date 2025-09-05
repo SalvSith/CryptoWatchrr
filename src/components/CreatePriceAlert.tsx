@@ -309,7 +309,7 @@ const CreatePriceAlert: React.FC = () => {
         </div>
 
         {/* Main Content */}
-        <div className="px-18 pb-18 space-y-12 overflow-x-hidden">
+        <div className="px-18 pb-18 space-y-6 overflow-x-hidden">
           {/* Tab Switcher - Same width as card below */}
           <div className="flex items-center justify-center hidden">
             <div className="bg-bg-gray border border-gray-stroke rounded-switcher p-[4.499px] flex w-full max-w-[402px] relative h-[44.992px]">
