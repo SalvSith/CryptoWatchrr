@@ -400,14 +400,11 @@ const CreatePriceAlert: React.FC = () => {
               </div>
               <div className="flex items-center justify-between relative">
                 <div className="flex items-center gap-[3px]">
-                  <span className={`font-jakarta font-medium ${calculateFontSize(alertPrice)} text-text-dark tracking-[-2px]`}>
-                    $
-                  </span>
                   <input
                     type="text"
                     value={formatPrice(alertPrice)}
                     onChange={handlePriceChange}
-                    className={`font-jakarta font-medium ${calculateFontSize(alertPrice)} text-text-dark tracking-[-2px] bg-transparent outline-none max-w-[200px]`}
+                    className="font-jakarta font-medium text-xl text-text-dark tracking-[-2px] bg-transparent outline-none max-w-[200px]"
                     placeholder="0.00"
                   />
                 </div>
