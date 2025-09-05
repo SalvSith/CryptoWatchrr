@@ -67,42 +67,36 @@ const CreatePriceAlert: React.FC = () => {
     const formattedText = formatPrice(text);
     const length = formattedText.length;
     
-    // Gradual scaling system - much more gentle than before
-    // Base size: 20px (text-xl), gradually scale down
+    // CONSERVATIVE scaling - only reduce by small amounts to prevent overlap
+    // Base size: 20px (text-xl), MINIMAL reductions only when absolutely necessary
     
-    if (length <= 8) {
-      // Short text: Full size
-      return { fontSize: 'text-xl' }; // 20px
-    } else if (length <= 10) {
-      // Slightly longer: Minor reduction
-      return { fontSize: 'text-lg' }; // 18px
-    } else if (length <= 12) {
-      // Getting longer: Custom size between lg and base
+    if (length <= 12) {
+      // Normal lengths: Keep full size
+      return { fontSize: 'text-xl' }; // 20px - NO CHANGE
+    } else if (length <= 15) {
+      // Getting longer: Tiny reduction
       return { 
         fontSize: '', 
-        style: { fontSize: '17px' } // Custom size
-      };
-    } else if (length <= 14) {
-      // Longer: Base size
-      return { fontSize: 'text-base' }; // 16px
-    } else if (length <= 16) {
-      // Much longer: Custom size
-      return { 
-        fontSize: '', 
-        style: { fontSize: '15px' } // Custom size
+        style: { fontSize: '19px' } // Only 1px smaller - barely noticeable
       };
     } else if (length <= 18) {
-      // Very long: Small but still readable
-      return { fontSize: 'text-sm' }; // 14px
-    } else if (length <= 20) {
-      // Extremely long: Custom size
+      // Long text: Small reduction
       return { 
         fontSize: '', 
-        style: { fontSize: '13px' } // Custom size
+        style: { fontSize: '18px' } // Only 2px smaller - still very readable
+      };
+    } else if (length <= 22) {
+      // Very long: Moderate reduction
+      return { 
+        fontSize: '', 
+        style: { fontSize: '17px' } // 3px smaller - still readable
       };
     } else {
-      // Maximum length: Smallest readable size
-      return { fontSize: 'text-xs' }; // 12px
+      // Extremely long: Final reduction
+      return { 
+        fontSize: '', 
+        style: { fontSize: '16px' } // 4px smaller maximum - never tiny
+      };
     }
   };
 
