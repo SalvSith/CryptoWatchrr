@@ -261,15 +261,7 @@ const CreatePriceAlert: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-bg-white relative w-full max-w-[100vw] mx-auto overflow-x-hidden">
-      {/* Grid Background Pattern */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <div className="grid grid-cols-4 h-full">
-          {Array.from({ length: 16 }).map((_, i) => (
-            <div key={i} className="border border-gray-motive"></div>
-          ))}
-        </div>
-      </div>
+    <div className="min-h-screen relative w-full max-w-[100vw] mx-auto overflow-x-hidden" style={{ backgroundColor: '#FBFBFB' }}>
 
       {/* Content Container */}
       <div className="relative z-10 flex flex-col">
