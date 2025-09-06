@@ -247,6 +247,135 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
         </div>
       );
 
+    case 'VET':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="VeChain background" className="block max-w-none size-full" src="/assets/vechain-bg.svg" />
+          </div>
+          <div className="absolute inset-[20.83%_16.67%_17.66%_16.67%]">
+            <img alt="VeChain icon" className="block max-w-none size-full" src="/assets/vechain-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'SUI':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Sui background" className="block max-w-none size-full" src="/assets/sui-bg.svg" />
+          </div>
+          <div className="absolute inset-[15.82%_23.88%_17.52%_23.97%]">
+            <img alt="Sui icon" className="block max-w-none size-full" src="/assets/sui-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'XMR':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Monero background" className="block max-w-none size-full" src="/assets/monero-bg.svg" />
+          </div>
+          <div className="absolute inset-[16.67%_14.1%_14.1%_16.67%]">
+            <img alt="Monero icon" className="block max-w-none size-full" src="/assets/monero-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'ONT':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Ontology background" className="block max-w-none size-full" src="/assets/ontology-bg.svg" />
+          </div>
+          <div className="absolute bottom-[25.03%] left-1/4 right-[25.26%] top-[29.17%]">
+            <img alt="Ontology icon" className="block max-w-none size-full" src="/assets/ontology-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'XEM':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="NEM background" className="block max-w-none size-full" src="/assets/nem-bg.svg" />
+          </div>
+          <div className="absolute bottom-[50.02%] left-1/4 right-[42.52%] top-1/4">
+            <img alt="NEM Vector 1" className="block max-w-none size-full" src="/assets/nem-vector1.svg" />
+          </div>
+          <div className="absolute inset-[27.17%_26.17%_37.69%_50.5%]">
+            <img alt="NEM Vector 2" className="block max-w-none size-full" src="/assets/nem-vector2.svg" />
+          </div>
+          <div className="absolute inset-[48.8%_39.16%_26.21%_28.26%]">
+            <img alt="NEM Vector 3" className="block max-w-none size-full" src="/assets/nem-vector3.svg" />
+          </div>
+        </div>
+      );
+
+    case 'QTUM':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Qtum background" className="block max-w-none size-full" src="/assets/qtum-bg.svg" />
+          </div>
+          <div className="absolute inset-[26.04%_23.51%_26.07%_26.34%]">
+            <img alt="Qtum Lines" className="block max-w-none size-full" src="/assets/qtum-lines.svg" />
+          </div>
+          <div className="absolute bottom-[25.03%] left-1/4 right-[21.15%] top-1/4">
+            <img alt="Qtum Circles" className="block max-w-none size-full" src="/assets/qtum-circles.svg" />
+          </div>
+        </div>
+      );
+
+    case 'NPXS':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Pundi X background" className="block max-w-none size-full" src="/assets/pundix-bg.svg" />
+          </div>
+          <div className="absolute inset-[16.667%]">
+            <img alt="Pundi X Vector" className="block max-w-none size-full" src="/assets/pundix-vector.svg" />
+          </div>
+        </div>
+      );
+
+    case 'CELO':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Celo background" className="block max-w-none size-full" src="/assets/celo-bg.svg" />
+          </div>
+          <div className="absolute size-4 translate-x-[-50%] translate-y-[-50%]" style={{ top: "calc(50% - 0.495px)", left: "calc(50% - 0.495px)" }}>
+            <img alt="Celo icon" className="block max-w-none size-full" src="/assets/celo-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'PART':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Particl background" className="block max-w-none size-full" src="/assets/particl-bg.svg" />
+          </div>
+          <div className="absolute inset-[20.83%_17.69%_17.66%_20.83%]">
+            <img alt="Particl icon" className="block max-w-none size-full" src="/assets/particl-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'KCS':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Kucoin background" className="block max-w-none size-full" src="/assets/kucoin-bg.svg" />
+          </div>
+          <div className="absolute inset-[17.25%_18.91%_16.09%_21.97%]">
+            <img alt="Kucoin icon" className="block max-w-none size-full" src="/assets/kucoin-group.svg" />
+          </div>
+        </div>
+      );
+
     // For cryptocurrencies not yet implemented, use a generic placeholder
     // This will be expanded as more assets are downloaded
     default:
