@@ -10,7 +10,11 @@ import FiatCurrencyModal from './FiatCurrencyModal';
 import CryptocurrencyModal from './CryptocurrencyModal';
 import AnimatedPrice from './AnimatedPrice';
 
-const CreatePriceAlert: React.FC = () => {
+interface CreatePriceAlertProps {
+  onBack?: () => void;
+}
+
+const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'fiat' | 'crypto'>('fiat');
   const [alertPrice, setAlertPrice] = useState('112500.00');
   const [selectedPercentage, setSelectedPercentage] = useState<string | null>(null);
@@ -307,7 +311,10 @@ const CreatePriceAlert: React.FC = () => {
         <div className="bg-bg-white/95 backdrop-blur-sm sticky top-0 z-20 pt-0.5">
           <div className="flex items-center justify-between h-14 px-18 py-1.5">
             <div className="w-[62px] flex justify-start">
-              <button className="p-9 -m-9 hover:bg-gray-100 rounded-lg transition-colors">
+              <button 
+                onClick={onBack}
+                className="p-9 -m-9 hover:bg-gray-100 rounded-lg transition-colors"
+              >
                 <img src={assets.iconArrowLeft} alt="Back" className="w-27 h-27" />
               </button>
             </div>
