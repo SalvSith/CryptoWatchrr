@@ -523,6 +523,79 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
         </div>
       );
 
+    case 'SKY':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Skycoin background" className="block max-w-none size-full" src="/assets/skycoin-bg.svg" />
+          </div>
+          <div className="absolute inset-[16.67%]">
+            <img alt="Skycoin icon" className="block max-w-none size-full" src="/assets/skycoin-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'VTC':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Vertcoin background" className="block max-w-none size-full" src="/assets/vertcoin-bg.svg" />
+          </div>
+          <div className="absolute inset-[16.67%]">
+            <img alt="Vertcoin icon" className="block max-w-none size-full" src="/assets/vertcoin-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'NEBL':
+      return (
+        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center" style={iconStyle}>
+          <span className="text-white font-bold text-xs">NEBL</span>
+        </div>
+      );
+
+    case 'GBYTE':
+      return (
+        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center" style={iconStyle}>
+          <span className="text-white font-bold text-xs">GBYTE</span>
+        </div>
+      );
+
+    case 'PPC':
+      return (
+        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center" style={iconStyle}>
+          <span className="text-white font-bold text-xs">PPC</span>
+        </div>
+      );
+
+    case 'UBQ':
+      return (
+        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center" style={iconStyle}>
+          <span className="text-white font-bold text-xs">UBQ</span>
+        </div>
+      );
+
+    case 'ACT':
+      return (
+        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center" style={iconStyle}>
+          <span className="text-white font-bold text-xs">ACT</span>
+        </div>
+      );
+
+    case 'BAY':
+      return (
+        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center" style={iconStyle}>
+          <span className="text-white font-bold text-xs">BAY</span>
+        </div>
+      );
+
+    case 'TPAY':
+      return (
+        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center" style={iconStyle}>
+          <span className="text-white font-bold text-xs">TPAY</span>
+        </div>
+      );
+
     // For cryptocurrencies not yet implemented, use a generic placeholder
     // This will be expanded as more assets are downloaded
     default:
