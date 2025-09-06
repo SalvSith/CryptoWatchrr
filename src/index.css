@@ -84,6 +84,11 @@ input[type="number"] {
   #root {
     min-height: auto;
   }
+  
+  /* Reduce bottom padding on mobile for tighter layout */
+  .mobile-content-padding {
+    padding-bottom: 1rem !important;
+  }
 }
 
 /* Button hover effects */
