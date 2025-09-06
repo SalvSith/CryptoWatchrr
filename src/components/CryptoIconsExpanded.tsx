@@ -120,13 +120,8 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
 
     case 'SHIB':
       return (
-        <div className="overflow-clip relative rounded-full" style={iconStyle}>
-          <div className="absolute inset-0">
-            <img alt="Shiba background" className="block max-w-none size-full" src="/assets/shiba-bg.svg" />
-          </div>
-          <div className="absolute inset-[18.08%_14.66%_15.25%_18.67%]">
-            <img alt="Shiba icon" className="block max-w-none size-full" src="/assets/shiba-group.svg" />
-          </div>
+        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center" style={iconStyle}>
+          <span className="text-white font-bold text-xs">SHIB</span>
         </div>
       );
 
@@ -537,13 +532,8 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
 
     case 'VTC':
       return (
-        <div className="overflow-clip relative rounded-full" style={iconStyle}>
-          <div className="absolute inset-0">
-            <img alt="Vertcoin background" className="block max-w-none size-full" src="/assets/vertcoin-bg.svg" />
-          </div>
-          <div className="absolute inset-[16.67%]">
-            <img alt="Vertcoin icon" className="block max-w-none size-full" src="/assets/vertcoin-group.svg" />
-          </div>
+        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-green-600 to-emerald-700 flex items-center justify-center" style={iconStyle}>
+          <span className="text-white font-bold text-xs">VTC</span>
         </div>
       );
 
