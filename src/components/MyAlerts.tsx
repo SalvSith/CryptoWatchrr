@@ -119,7 +119,7 @@ const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert }) => {
                 {/* Alert Info */}
                 <div className="flex-1 min-w-0">
                   {/* Top row - Name and Symbol */}
-                  <div className="flex items-center gap-[4px] mb-[4px]">
+                  <div className="flex items-center gap-[4px] mb-[2px]">
                     <span className="font-jakarta font-medium text-[15.75px] text-[#15171a] leading-[27px]">
                       {alert.name}
                     </span>
