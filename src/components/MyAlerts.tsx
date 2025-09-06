@@ -7,8 +7,7 @@ interface AlertData {
   symbol: string;
   icon: string;
   price: string;
-  changePercent: string;
-  isPositive: boolean;
+  alertType: 'Once Off' | 'Recurring';
   isEnabled: boolean;
 }
 
@@ -22,50 +21,45 @@ const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert }) => {
       id: '1',
       name: 'Retirement Fund',
       symbol: 'DOGE',
-      icon: '/assets/doge-icon.svg',
+      icon: '/assets/group.svg', // From Figma MCP
       price: '$1.00',
-      changePercent: '+2000.21%',
-      isPositive: true,
+      alertType: 'Once Off',
       isEnabled: true,
     },
     {
       id: '2',
       name: 'Tron Experiment',
       symbol: 'TRX',
-      icon: '/assets/btc-icon.svg', // Using BTC icon as placeholder since TRX icon is not available
+      icon: '/assets/trx.svg', // From Figma MCP
       price: '$0.5',
-      changePercent: '+3.21%',
-      isPositive: true,
+      alertType: 'Recurring',
       isEnabled: true,
     },
     {
       id: '3',
       name: 'XRP Investment',
       symbol: 'XRP',
-      icon: '/assets/xrp-icon.svg',
+      icon: '/assets/myalerts-xrp.svg',
       price: '$2.90',
-      changePercent: '+3.21%',
-      isPositive: true,
+      alertType: 'Once Off',
       isEnabled: true,
     },
     {
       id: '4',
       name: 'Bitcoin Investment',
       symbol: 'BTC',
-      icon: '/assets/btc-icon.svg',
+      icon: '/assets/myalerts-btc.svg',
       price: '$250,924.00',
-      changePercent: '+3.21%',
-      isPositive: true,
+      alertType: 'Once Off',
       isEnabled: true,
     },
     {
       id: '5',
       name: 'Ethereum',
       symbol: 'ETH',
-      icon: '/assets/eth-icon.svg',
+      icon: '/assets/myalerts-eth.svg',
       price: '$3,500.00',
-      changePercent: '+19.01%',
-      isPositive: true,
+      alertType: 'Once Off',
       isEnabled: true,
     },
   ]);
@@ -95,7 +89,7 @@ const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert }) => {
         {/* Header */}
         <div className="flex items-center justify-between h-[56px] px-[18px] py-[9px] bg-[#fbfbfb]/95 backdrop-blur-sm sticky top-0">
           <button className="p-[9px] -m-[9px] hover:bg-gray-100/50 rounded-lg transition-colors">
-            <img src={assets.iconArrowLeft} alt="Back" className="w-[27px] h-[27px]" />
+            <img src="/assets/icon-arrow-left.svg" alt="Back" className="w-[27px] h-[27px]" />
           </button>
           <h1 className="font-jakarta font-medium text-[18px] text-[#15171a] leading-[29px]">
             My Price Alerts
@@ -104,7 +98,7 @@ const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert }) => {
             onClick={onCreateAlert}
             className="p-[9px] -m-[9px] hover:bg-gray-100/50 rounded-lg transition-colors"
           >
-            <img src={assets.iconPlus} alt="Create Alert" className="w-[27px] h-[27px]" />
+            <img src="/assets/icon-plus.svg" alt="Create Alert" className="w-[27px] h-[27px]" />
           </button>
         </div>
 
@@ -136,15 +130,16 @@ const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert }) => {
                     </div>
                   </div>
 
-                  {/* Bottom row - Price and Change */}
-                  <div className="flex items-center gap-[4px]">
+                  {/* Bottom row - Price and Alert Type */}
+                  <div className="flex items-center">
                     <span className="font-jakarta font-normal text-[13.5px] text-gray-500 leading-[25px]">
                       {alert.price}
                     </span>
-                    <span className={`font-jakarta font-normal text-[13.5px] leading-[25px] ${
-                      alert.isPositive ? 'text-[#1b9e4b]' : 'text-red-500'
-                    }`}>
-                      {alert.changePercent}
+                    <span className="font-jakarta font-normal text-[13.5px] text-gray-500 leading-[25px]">
+                      {` | `}
+                    </span>
+                    <span className="font-jakarta font-semibold text-[13.5px] text-gray-500 leading-[25px]">
+                      {alert.alertType}
                     </span>
                   </div>
                 </div>
@@ -169,7 +164,7 @@ const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert }) => {
               {/* Separator line (except for last item) */}
               {index < alerts.length - 1 && (
                 <div className="h-0 w-full">
-                  <img src={assets.lineImage} alt="" className="w-full h-px" />
+                  <img src="/assets/line-separator.svg" alt="" className="w-full h-px" />
                 </div>
               )}
             </div>
