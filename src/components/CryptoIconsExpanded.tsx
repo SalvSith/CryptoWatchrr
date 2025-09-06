@@ -122,10 +122,10 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
       return (
         <div className="overflow-clip relative rounded-full" style={iconStyle}>
           <div className="absolute inset-0">
-            <img alt="Shiba background" className="block max-w-none size-full" src="/assets/shiba-new-bg.svg" />
+            <img alt="Shiba background" className="block max-w-none size-full" src="/assets/shiba-correct-bg.svg" />
           </div>
-          <div className="absolute inset-[20.83%_16.67%_18.05%_16.67%]">
-            <img alt="Shiba icon" className="block max-w-none size-full" src="/assets/shiba-new-group.svg" />
+          <div className="absolute inset-[18.08%_15.42%_15.25%_18.67%]" style={{ maskImage: `url('/assets/shiba-correct-group.svg')` }}>
+            <img alt="Shiba icon" className="block max-w-none size-full" src="/assets/shiba-correct-group1.svg" />
           </div>
         </div>
       );
@@ -527,10 +527,10 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
       return (
         <div className="overflow-clip relative rounded-full" style={iconStyle}>
           <div className="absolute inset-0">
-            <img alt="Skycoin background" className="block max-w-none size-full" src="/assets/skycoin-new-bg.svg" />
+            <img alt="Skycoin background" className="block max-w-none size-full" src="/assets/vertcoin-new-bg.svg" />
           </div>
-          <div className="absolute inset-[33.33%_14.13%_32.07%_16.67%]">
-            <img alt="Skycoin icon" className="block max-w-none size-full" src="/assets/skycoin-new-group.svg" />
+          <div className="absolute bottom-[28.85%] left-[20.83%] right-[17.71%] top-1/4">
+            <img alt="Skycoin icon" className="block max-w-none size-full" src="/assets/skycoin-correct-group.svg" />
           </div>
         </div>
       );
@@ -541,8 +541,8 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
           <div className="absolute inset-0">
             <img alt="Vertcoin background" className="block max-w-none size-full" src="/assets/vertcoin-new-bg.svg" />
           </div>
-          <div className="absolute bottom-1/4 left-[20.83%] right-[17.63%] top-1/4">
-            <img alt="Vertcoin icon" className="block max-w-none size-full" src="/assets/vertcoin-new-group.svg" />
+          <div className="absolute inset-[20.83%_17.63%_17.63%_20.83%]">
+            <img alt="Vertcoin icon" className="block max-w-none size-full" src="/assets/vertcoin-correct-group.svg" />
           </div>
         </div>
       );
@@ -551,10 +551,10 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
       return (
         <div className="overflow-clip relative rounded-full" style={iconStyle}>
           <div className="absolute inset-0">
-            <img alt="Neblio background" className="block max-w-none size-full" src="/assets/neblio-bg.svg" />
+            <img alt="Neblio background" className="block max-w-none size-full" src="/assets/neblio-correct-bg.svg" />
           </div>
-          <div className="absolute inset-[16.67%_22%_16.67%_20.83%]">
-            <img alt="Neblio icon" className="block max-w-none size-full" src="/assets/neblio-group.svg" />
+          <div className="absolute inset-[16.67%_17.63%_18.01%_20.83%]">
+            <img alt="Neblio icon" className="block max-w-none size-full" src="/assets/neblio-correct-group.svg" />
           </div>
         </div>
       );
