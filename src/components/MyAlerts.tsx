@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 interface AlertData {
   id: string;
@@ -11,64 +11,13 @@ interface AlertData {
 }
 
 interface MyAlertsProps {
+  alerts: AlertData[];
   onCreateAlert: () => void;
   onEditAlert: (alertData: AlertData) => void;
+  onToggleAlert: (id: string) => void;
 }
 
-const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert, onEditAlert }) => {
-  const [alerts, setAlerts] = useState<AlertData[]>([
-    {
-      id: '1',
-      name: 'Retirement Fund',
-      symbol: 'DOGE',
-      icon: '/assets/group.svg', // From Figma MCP
-      price: '$1.00',
-      alertType: 'Once Off',
-      isEnabled: true,
-    },
-    {
-      id: '2',
-      name: 'Tron Experiment',
-      symbol: 'TRX',
-      icon: '/assets/trx.svg', // From Figma MCP
-      price: '$0.5',
-      alertType: 'Recurring',
-      isEnabled: true,
-    },
-    {
-      id: '3',
-      name: 'XRP Investment',
-      symbol: 'XRP',
-      icon: '/assets/myalerts-xrp.svg',
-      price: '$2.90',
-      alertType: 'Once Off',
-      isEnabled: true,
-    },
-    {
-      id: '4',
-      name: 'Bitcoin Investment',
-      symbol: 'BTC',
-      icon: '/assets/myalerts-btc.svg',
-      price: '$250,924.00',
-      alertType: 'Once Off',
-      isEnabled: true,
-    },
-    {
-      id: '5',
-      name: 'Ethereum',
-      symbol: 'ETH',
-      icon: '/assets/myalerts-eth.svg',
-      price: '$3,500.00',
-      alertType: 'Once Off',
-      isEnabled: true,
-    },
-  ]);
-
-  const toggleAlert = (id: string) => {
-    setAlerts(prev => prev.map(alert => 
-      alert.id === id ? { ...alert, isEnabled: !alert.isEnabled } : alert
-    ));
-  };
+const MyAlerts: React.FC<MyAlertsProps> = ({ alerts, onCreateAlert, onEditAlert, onToggleAlert }) => {
 
   return (
     <div className="bg-[#fbfbfb] relative w-full min-h-screen">
@@ -155,7 +104,7 @@ const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert, onEditAlert }) => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      toggleAlert(alert.id);
+                      onToggleAlert(alert.id);
                     }}
                     className={`relative w-[46px] h-[25px] rounded-[50px] transition-colors duration-200 ease-in-out ${
                       alert.isEnabled ? 'bg-[#256bfd]' : 'bg-gray-300'

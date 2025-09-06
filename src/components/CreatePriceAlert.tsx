@@ -24,9 +24,10 @@ interface AlertData {
 interface CreatePriceAlertProps {
   onBack?: () => void;
   existingAlert?: AlertData | null;
+  onAddAlert?: (newAlert: Omit<AlertData, 'id' | 'isEnabled'>) => void;
 }
 
-const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAlert }) => {
+const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAlert, onAddAlert }) => {
   const [activeTab, setActiveTab] = useState<'fiat' | 'crypto'>('fiat');
   const [alertPrice, setAlertPrice] = useState(() => {
     if (existingAlert?.price) {
@@ -363,6 +364,23 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAle
     }
   };
 
+  const handleCreateAlert = () => {
+    if (areAllSettingsFilled() && onAddAlert && !existingAlert) {
+      // Get the crypto icon based on selected crypto
+      const cryptoIcon = cryptocurrencies[selectedCrypto]?.icon || '/assets/btc-icon.svg';
+      
+      const newAlert = {
+        name: alertName,
+        symbol: selectedCrypto,
+        icon: cryptoIcon,
+        price: formatPrice(alertPrice),
+        alertType: (frequency === 'once' ? 'Once Off' : 'Recurring') as 'Once Off' | 'Recurring',
+      };
+      
+      onAddAlert(newAlert);
+    }
+  };
+
   return (
     <div className="relative w-full max-w-[100vw] mx-auto" style={{ backgroundColor: '#FBFBFB' }}>
 
@@ -618,6 +636,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAle
 
           {/* Set Alert Button */}
           <button 
+            onClick={handleCreateAlert}
             className={`w-full font-jakarta font-medium text-base py-13.5 px-27 rounded-button transition-colors ${
               areAllSettingsFilled() 
                 ? 'bg-text-primary hover:bg-text-primary/90 text-white active:scale-[0.98] cursor-pointer' 
