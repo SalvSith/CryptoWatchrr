@@ -154,6 +154,99 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
         </div>
       );
 
+    case 'TRX':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="TRON icon" className="block max-w-none size-full" src="/assets/tron-trx.svg" />
+          </div>
+        </div>
+      );
+
+    case 'ADA':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Cardano background" className="block max-w-none size-full" src="/assets/cardano-bg.svg" />
+          </div>
+          <div className="absolute inset-[20.83%_16.67%_16.94%_16.67%]">
+            <img alt="Cardano icon" className="block max-w-none size-full" src="/assets/cardano-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'DASH':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Dash background" className="block max-w-none size-full" src="/assets/dash-bg.svg" />
+          </div>
+          <div className="absolute inset-[29.17%_16.67%_31.57%_16.67%]">
+            <img alt="Dash icon" className="block max-w-none size-full" src="/assets/dash-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'LINK':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Chainlink background" className="block max-w-none size-full" src="/assets/chainlink-bg.svg" />
+          </div>
+          <div className="absolute inset-[16.67%_22.5%_16.67%_20.83%]">
+            <img alt="Chainlink icon" className="block max-w-none size-full" src="/assets/chainlink-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'XLM':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Stellar background" className="block max-w-none size-full" src="/assets/stellar-bg.svg" />
+          </div>
+          <div className="absolute inset-[20.83%_16.67%]">
+            <img alt="Stellar icon" className="block max-w-none size-full" src="/assets/stellar-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'MATIC':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Polygon background" className="block max-w-none size-full" src="/assets/polygon-bg.svg" />
+          </div>
+          <div className="absolute inset-[20.83%_16.67%_22.5%_16.67%]">
+            <img alt="Polygon icon" className="block max-w-none size-full" src="/assets/polygon-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'UNI':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Uniswap background" className="block max-w-none size-full" src="/assets/uniswap-bg.svg" />
+          </div>
+          <div className="absolute inset-[16.67%_21.16%_16.67%_20.83%]">
+            <img alt="Uniswap icon" className="block max-w-none size-full" src="/assets/uniswap-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'DOT':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Polkadot background" className="block max-w-none size-full" src="/assets/polkadot-bg.svg" />
+          </div>
+          <div className="absolute bottom-[16.67%] left-1/4 right-[24.37%] top-[16.67%]">
+            <img alt="Polkadot icon" className="block max-w-none size-full" src="/assets/polkadot-group.svg" />
+          </div>
+        </div>
+      );
+
     // For cryptocurrencies not yet implemented, use a generic placeholder
     // This will be expanded as more assets are downloaded
     default:
