@@ -136,7 +136,7 @@ const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert }) => {
                       {alert.price}
                     </span>
                     <span className="font-jakarta font-normal text-[13.5px] text-gray-500 leading-[25px]">
-                      {` | `}
+                      {` |  `}
                     </span>
                     <span className="font-jakarta font-semibold text-[13.5px] text-gray-500 leading-[25px]">
                       {alert.alertType}
