@@ -51,6 +51,7 @@ const ToneModal: React.FC<ToneModalProps> = ({
       setIsDragging(false);
       setHasUpdatedParent(false); // Reset update flag when opening
       // Sync local state with props when modal opens
+      console.log('Modal opening, syncing localTone with selectedTone:', selectedTone);
       setLocalTone(selectedTone);
       // Small delay to ensure smooth slide-in animation
       setTimeout(() => setIsVisible(true), 10);
@@ -180,8 +181,10 @@ const ToneModal: React.FC<ToneModalProps> = ({
   };
 
   const handleToneSelect = (toneId: string) => {
+    console.log('handleToneSelect called with:', toneId);
     setLocalTone(toneId);
     // Update parent immediately and close modal
+    console.log('Calling onUpdateTone with:', toneId);
     onUpdateTone(toneId);
     setHasUpdatedParent(true); // Mark that we've already updated the parent
     closeModal();

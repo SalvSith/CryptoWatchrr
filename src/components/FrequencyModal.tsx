@@ -37,6 +37,7 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
       setIsDragging(false);
       setHasUpdatedParent(false); // Reset update flag when opening
       // Sync local state with props when modal opens
+      console.log('Modal opening, syncing localFrequency with selectedFrequency:', selectedFrequency);
       setLocalFrequency(selectedFrequency);
       // Small delay to ensure smooth slide-in animation
       setTimeout(() => setIsVisible(true), 10);
@@ -154,8 +155,10 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
   };
 
   const handleFrequencySelect = (frequency: 'once' | 'recurring') => {
+    console.log('handleFrequencySelect called with:', frequency);
     setLocalFrequency(frequency);
     // Update parent immediately and close modal
+    console.log('Calling onUpdateFrequency with:', frequency);
     onUpdateFrequency(frequency);
     setHasUpdatedParent(true); // Mark that we've already updated the parent
     closeModal();

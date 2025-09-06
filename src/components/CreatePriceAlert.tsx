@@ -221,6 +221,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAle
   };
 
   const handleUpdateFrequency = (newFrequency: 'once' | 'recurring') => {
+    console.log('handleUpdateFrequency called with:', newFrequency);
     setFrequency(newFrequency);
     setHasChanges(true);
   };
@@ -231,6 +232,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAle
   };
 
   const handleUpdateTone = (newTone: string) => {
+    console.log('handleUpdateTone called with:', newTone);
     setCustomTone(newTone);
     setHasChanges(true);
   };
