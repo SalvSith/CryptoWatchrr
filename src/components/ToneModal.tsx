@@ -42,11 +42,6 @@ const ToneModal: React.FC<ToneModalProps> = ({
     { id: 'danger', name: 'Danger', fileName: 'Danger.mp3' },
   ];
 
-  // Update local state when props change
-  useEffect(() => {
-    setLocalTone(selectedTone);
-  }, [selectedTone]);
-
   // Disable body scroll when modal is open and reset drag state
   useEffect(() => {
     if (isOpen) {
@@ -55,6 +50,8 @@ const ToneModal: React.FC<ToneModalProps> = ({
       setDragY(0);
       setIsDragging(false);
       setHasUpdatedParent(false); // Reset update flag when opening
+      // Sync local state with props when modal opens
+      setLocalTone(selectedTone);
       // Small delay to ensure smooth slide-in animation
       setTimeout(() => setIsVisible(true), 10);
     } else {

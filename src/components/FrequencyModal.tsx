@@ -28,11 +28,6 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
   const currentYRef = useRef(0);
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Update local state when props change
-  useEffect(() => {
-    setLocalFrequency(selectedFrequency);
-  }, [selectedFrequency]);
-
   // Disable body scroll when modal is open and reset drag state
   useEffect(() => {
     if (isOpen) {
@@ -41,6 +36,8 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
       setDragY(0);
       setIsDragging(false);
       setHasUpdatedParent(false); // Reset update flag when opening
+      // Sync local state with props when modal opens
+      setLocalFrequency(selectedFrequency);
       // Small delay to ensure smooth slide-in animation
       setTimeout(() => setIsVisible(true), 10);
     } else {
