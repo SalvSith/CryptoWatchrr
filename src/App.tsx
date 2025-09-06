@@ -2,7 +2,7 @@ import CreatePriceAlert from './components/CreatePriceAlert';
 
 function App() {
   return (
-    <div className="bg-gray-100">
+    <div style={{ backgroundColor: '#FBFBFB' }}>
       <CreatePriceAlert />
     </div>
   );
