@@ -131,12 +131,12 @@ const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert }) => {
                   </div>
 
                   {/* Bottom row - Price and Alert Type */}
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-[11.248px]">
                     <span className="font-jakarta font-normal text-[13.5px] text-gray-500 leading-[25px]">
                       {alert.price}
                     </span>
                     <span className="font-jakarta font-normal text-[13.5px] text-gray-500 leading-[25px]">
-                      {` |  `}
+                      |
                     </span>
                     <span className="font-jakarta font-semibold text-[13.5px] text-gray-500 leading-[25px]">
                       {alert.alertType}
