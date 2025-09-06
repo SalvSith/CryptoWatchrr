@@ -474,7 +474,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAle
                     <button
                       key={percent}
                       onClick={() => applyPercentage(parseInt(percent))}
-                      className={`px-13.5 py-2.25 bg-bg-white border border-gray-stroke rounded-select font-jakarta font-medium text-xs hover:bg-gray-50 transition-colors ${
+                      className={`w-[60px] py-2.25 bg-bg-white border border-gray-stroke rounded-select font-jakarta font-medium text-xs hover:bg-gray-50 transition-colors ${
                         selectedPercentage === percent && !isCustomPercentage ? 'border-text-primary text-text-primary' : 'text-text-black'
                       }`}
                     >
@@ -483,7 +483,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAle
                   ))}
                   <button 
                     onClick={() => setIsPercentModalOpen(true)}
-                    className={`px-13.5 py-2.25 bg-bg-white border rounded-[7px] font-jakarta font-medium text-xs hover:bg-gray-50 transition-colors ${
+                    className={`w-[60px] py-2.25 bg-bg-white border rounded-[7px] font-jakarta font-medium text-xs hover:bg-gray-50 transition-colors ${
                       (calculatePercentageDifference(alertPrice) !== 'Set %' && isCustomPercentage) || 
                       (calculatePercentageDifference(alertPrice) !== 'Set %' && !selectedPercentage)
                         ? 'border-text-primary text-text-primary' 
