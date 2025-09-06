@@ -561,8 +561,13 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
 
     case 'GBYTE':
       return (
-        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center" style={iconStyle}>
-          <span className="text-white font-bold text-xs">GBYTE</span>
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Byteball background" className="block max-w-none size-full" src="/assets/gbyte-correct-bg.svg" />
+          </div>
+          <div className="absolute inset-[20.83%_17.63%_17.63%_20.83%]">
+            <img alt="Byteball icon" className="block max-w-none size-full" src="/assets/gbyte-correct-group.svg" />
+          </div>
         </div>
       );
 
@@ -570,10 +575,10 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
       return (
         <div className="overflow-clip relative rounded-full" style={iconStyle}>
           <div className="absolute inset-0">
-            <img alt="Peercoin background" className="block max-w-none size-full" src="/assets/peercoin-bg.svg" />
+            <img alt="Peercoin background" className="block max-w-none size-full" src="/assets/ppc-correct-bg.svg" />
           </div>
-          <div className="absolute inset-[16.67%_43.38%_20.59%_29.17%]">
-            <img alt="Peercoin icon" className="block max-w-none size-full" src="/assets/peercoin-group.svg" />
+          <div className="absolute inset-[16.67%_18.56%_16.67%_20.83%]">
+            <img alt="Peercoin icon" className="block max-w-none size-full" src="/assets/ppc-correct-group.svg" />
           </div>
         </div>
       );
@@ -582,32 +587,47 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
       return (
         <div className="overflow-clip relative rounded-full" style={iconStyle}>
           <div className="absolute inset-0">
-            <img alt="Ubiq background" className="block max-w-none size-full" src="/assets/ubiq-bg.svg" />
+            <img alt="Ubiq background" className="block max-w-none size-full" src="/assets/vertcoin-new-bg.svg" />
           </div>
-          <div className="absolute inset-[16.67%_17.63%_14.1%_20.83%]">
-            <img alt="Ubiq icon" className="block max-w-none size-full" src="/assets/ubiq-group.svg" />
+          <div className="absolute bottom-[17.63%] left-1/4 right-[21.15%] top-[20.83%]">
+            <img alt="Ubiq icon" className="block max-w-none size-full" src="/assets/ubq-correct-group.svg" />
           </div>
         </div>
       );
 
     case 'ACT':
       return (
-        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center" style={iconStyle}>
-          <span className="text-white font-bold text-xs">ACT</span>
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Achain background" className="block max-w-none size-full" src="/assets/act-correct-bg.svg" />
+          </div>
+          <div className="absolute bottom-[21.15%] left-[20.83%] right-[17.63%] top-1/4">
+            <img alt="Achain icon" className="block max-w-none size-full" src="/assets/act-correct-group.svg" />
+          </div>
         </div>
       );
 
     case 'BAY':
       return (
-        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center" style={iconStyle}>
-          <span className="text-white font-bold text-xs">BAY</span>
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="BitBay background" className="block max-w-none size-full" src="/assets/bay-correct-bg.svg" />
+          </div>
+          <div className="absolute inset-[20.83%_16.67%_24.45%_16.67%]">
+            <img alt="BitBay icon" className="block max-w-none size-full" src="/assets/bay-correct-group.svg" />
+          </div>
         </div>
       );
 
     case 'TPAY':
       return (
-        <div className="overflow-clip relative rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center" style={iconStyle}>
-          <span className="text-white font-bold text-xs">TPAY</span>
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="TokenPay background" className="block max-w-none size-full" src="/assets/tpay-correct-bg.svg" />
+          </div>
+          <div className="absolute inset-[20.83%_29.24%_22.8%_29.17%]">
+            <img alt="TokenPay icon" className="block max-w-none size-full" src="/assets/tpay-correct-group.svg" />
+          </div>
         </div>
       );
 
