@@ -24,6 +24,7 @@ const ToneModal: React.FC<ToneModalProps> = ({
   // Local state for selection
   const [localTone, setLocalTone] = useState<string | null>(selectedTone);
   const [playingTone, setPlayingTone] = useState<string | null>(null);
+  const [hasUpdatedParent, setHasUpdatedParent] = useState(false);
 
   const startYRef = useRef(0);
   const currentYRef = useRef(0);
@@ -53,6 +54,7 @@ const ToneModal: React.FC<ToneModalProps> = ({
       // Reset drag state when opening
       setDragY(0);
       setIsDragging(false);
+      setHasUpdatedParent(false); // Reset update flag when opening
       // Small delay to ensure smooth slide-in animation
       setTimeout(() => setIsVisible(true), 10);
     } else {
@@ -166,8 +168,8 @@ const ToneModal: React.FC<ToneModalProps> = ({
     // Wait for slide-out animation to complete before calling onClose
     setTimeout(() => {
       onClose();
-      // Apply changes when modal closes (only if a selection was made)
-      if (localTone !== null) {
+      // Apply changes when modal closes (only if a selection was made and we haven't already updated)
+      if (localTone !== null && !hasUpdatedParent) {
         onUpdateTone(localTone);
       }
     }, 300);
@@ -184,6 +186,7 @@ const ToneModal: React.FC<ToneModalProps> = ({
     setLocalTone(toneId);
     // Update parent immediately and close modal
     onUpdateTone(toneId);
+    setHasUpdatedParent(true); // Mark that we've already updated the parent
     closeModal();
   };
 

@@ -22,6 +22,7 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
   
   // Local state for selection
   const [localFrequency, setLocalFrequency] = useState<'once' | 'recurring' | null>(selectedFrequency);
+  const [hasUpdatedParent, setHasUpdatedParent] = useState(false);
 
   const startYRef = useRef(0);
   const currentYRef = useRef(0);
@@ -39,6 +40,7 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
       // Reset drag state when opening
       setDragY(0);
       setIsDragging(false);
+      setHasUpdatedParent(false); // Reset update flag when opening
       // Small delay to ensure smooth slide-in animation
       setTimeout(() => setIsVisible(true), 10);
     } else {
@@ -140,8 +142,8 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
     // Wait for slide-out animation to complete before calling onClose
     setTimeout(() => {
       onClose();
-      // Apply changes when modal closes (only if a selection was made)
-      if (localFrequency !== null) {
+      // Apply changes when modal closes (only if a selection was made and we haven't already updated)
+      if (localFrequency !== null && !hasUpdatedParent) {
         onUpdateFrequency(localFrequency);
       }
     }, 300);
@@ -158,6 +160,7 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
     setLocalFrequency(frequency);
     // Update parent immediately and close modal
     onUpdateFrequency(frequency);
+    setHasUpdatedParent(true); // Mark that we've already updated the parent
     closeModal();
   };
 
