@@ -75,6 +75,15 @@ input[type="number"] {
   * {
     max-width: 100%;
   }
+  
+  /* Ensure mobile viewport fits content properly */
+  body {
+    min-height: auto;
+  }
+  
+  #root {
+    min-height: auto;
+  }
 }
 
 /* Button hover effects */
