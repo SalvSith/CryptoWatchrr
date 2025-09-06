@@ -515,10 +515,10 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
       return (
         <div className="overflow-clip relative rounded-full" style={iconStyle}>
           <div className="absolute inset-0">
-            <img alt="Litecoin background" className="block max-w-none size-full" src="/assets/litecoin-new-bg.svg" />
+            <img alt="Litecoin background" className="block max-w-none size-full" src="/assets/litecoin-bg.svg" />
           </div>
-          <div className="absolute inset-[16.67%_14.1%_14.1%_16.67%]">
-            <img alt="Litecoin icon" className="block max-w-none size-full" src="/assets/litecoin-new-group.svg" />
+          <div className="absolute bottom-[20.83%] left-1/4 right-[21.86%] top-[20.83%]">
+            <img alt="Litecoin icon" className="block max-w-none size-full" src="/assets/litecoin-group.svg" />
           </div>
         </div>
       );
