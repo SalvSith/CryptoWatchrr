@@ -8,6 +8,7 @@ import ToneModal from './ToneModal';
 import PercentModal from './PercentModal';
 import FiatCurrencyModal from './FiatCurrencyModal';
 import CryptocurrencyModal from './CryptocurrencyModal';
+import AnimatedPrice from './AnimatedPrice';
 
 const CreatePriceAlert: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'fiat' | 'crypto'>('fiat');
@@ -23,6 +24,7 @@ const CreatePriceAlert: React.FC = () => {
   const [isPercentModalOpen, setIsPercentModalOpen] = useState(false);
   const [isFiatCurrencyModalOpen, setIsFiatCurrencyModalOpen] = useState(false);
   const [isCryptocurrencyModalOpen, setIsCryptocurrencyModalOpen] = useState(false);
+  const [isPriceAnimating, setIsPriceAnimating] = useState(false);
   
   // Fiat currency setting - defaults to USD
   const [selectedFiatCurrency, setSelectedFiatCurrency] = useState('USD');
@@ -198,6 +200,10 @@ const CreatePriceAlert: React.FC = () => {
     // Parse the percentage and apply it to the price
     const percentageValue = parseFloat(newPercentage.replace('%', ''));
     if (!isNaN(percentageValue)) {
+      // Trigger animation
+      setIsPriceAnimating(true);
+      setTimeout(() => setIsPriceAnimating(false), 600);
+      
       const newPrice = basePrice * (1 + percentageValue / 100);
       setAlertPrice(newPrice.toFixed(2));
       setSelectedPercentage(`${percentageValue > 0 ? '+' : ''}${percentageValue}%`);
@@ -273,6 +279,10 @@ const CreatePriceAlert: React.FC = () => {
 
   const applyPercentage = (percentage: number) => {
     const percentageString = `${percentage > 0 ? '+' : ''}${percentage}%`;
+    
+    // Trigger animation
+    setIsPriceAnimating(true);
+    setTimeout(() => setIsPriceAnimating(false), 600);
     
     // If clicking the same percentage, deselect it and reset to base price
     if (selectedPercentage === percentageString) {
@@ -387,7 +397,7 @@ const CreatePriceAlert: React.FC = () => {
             <div className="bg-bg-gray px-13.5 py-9 rounded-card">
               <div className="flex items-center justify-between mb-1">
                 <p className="font-jakarta font-medium text-xs text-text-dark">
-                  Set At:
+                  Set Alert At:
                 </p>
                 <div className="flex gap-4.5 flex-wrap min-w-0">
                   {['-5%', '+5%', '+10%'].map((percent) => (
@@ -415,12 +425,12 @@ const CreatePriceAlert: React.FC = () => {
               </div>
               <div className="flex items-center justify-between relative">
                 <div className="flex items-center gap-[3px]">
-                  <input
-                    type="text"
+                  <AnimatedPrice
                     value={formatPrice(alertPrice)}
                     onChange={handlePriceChange}
                     className="font-jakarta font-medium text-xl text-text-dark tracking-[-2px] bg-transparent outline-none flex-1 min-w-0"
                     placeholder="0.00"
+                    isAnimating={isPriceAnimating}
                   />
                 </div>
                 <button 
