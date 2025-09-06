@@ -279,12 +279,13 @@ const CryptocurrencyModalExpanded: React.FC<CryptocurrencyModalProps> = ({
                 </div>
                 <div className="content-stretch flex gap-[8.998px] items-center justify-start relative shrink-0">
                   <div className="relative shrink-0 size-[22.496px]">
+                    <div className="absolute left-[-12.37px] size-[22.496px] top-0" />
                     {localSelectedCryptocurrency === crypto.id ? (
-                      <div className="bg-[#256bfd] rounded-[6px] size-[22.496px] flex items-center justify-center">
+                      <div className="absolute bg-[#256bfd] left-1/2 rounded-[6px] size-[22.496px] top-0 translate-x-[-50%] flex items-center justify-center">
                         <img src="/assets/checkmark.svg" alt="Selected" className="w-[15.658px] h-[12.684px]" />
                       </div>
                     ) : (
-                      <div className="rounded-[6px] size-[22.496px] border border-[#e1e3e6]" />
+                      <div className="absolute rounded-[6px] size-[22.496px] border border-[#e1e3e6] left-1/2 top-0 translate-x-[-50%]" />
                     )}
                   </div>
                 </div>
