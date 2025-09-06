@@ -12,6 +12,50 @@ const CRYPTO_ID_MAP: { [key: string]: string } = {
   'BNB': 'binancecoin',
   'SOL': 'solana',
   'DOGE': 'dogecoin',
+  'TRX': 'tron',
+  'ADA': 'cardano',
+  'DASH': 'dash',
+  'LINK': 'chainlink',
+  'BCH': 'bitcoin-cash',
+  'XLM': 'stellar',
+  'AVAX': 'avalanche-2',
+  'MATIC': 'matic-network',
+  'SHIB': 'shiba-inu',
+  'LTC': 'litecoin',
+  'UNI': 'uniswap',
+  'DOT': 'polkadot',
+  'VET': 'vechain',
+  'SUI': 'sui',
+  'XMR': 'monero',
+  'ONT': 'ontology',
+  'XEM': 'nem',
+  'QTUM': 'qtum',
+  'NPXS': 'pundi-x',
+  'CELO': 'celo',
+  'PART': 'particl',
+  'KCS': 'kucoin-shares',
+  'BASE': 'base',
+  'DCR': 'decred',
+  'QKC': 'quarkchain',
+  'DGB': 'digibyte',
+  'BAT': 'basic-attention-token',
+  'HT': 'huobi-token',
+  'LSK': 'lisk',
+  'USDT': 'tether',
+  'ETC': 'ethereum-classic',
+  'BTCP': 'bitcoin-private',
+  'ICX': 'icon',
+  'SYS': 'syscoin',
+  'BCO': 'bridgecoin',
+  'SKY': 'skycoin',
+  'VTC': 'vertcoin',
+  'NEBL': 'neblio',
+  'GBYTE': 'byteball',
+  'PPC': 'peercoin',
+  'UBQ': 'ubiq',
+  'ACT': 'achain',
+  'BAY': 'bitbay',
+  'TPAY': 'tokenpay',
 };
 
 // Map our crypto symbols to CoinLore IDs (backup API)
@@ -22,6 +66,50 @@ const COINLORE_ID_MAP: { [key: string]: string } = {
   'BNB': '2710',    // Binance Coin
   'SOL': '48543',   // Solana
   'DOGE': '2',      // Dogecoin
+  'TRX': '2',       // Tron
+  'ADA': '257',     // Cardano
+  'DASH': '8',      // Dash
+  'LINK': '1975',   // Chainlink
+  'BCH': '2321',    // Bitcoin Cash
+  'XLM': '33',      // Stellar
+  'AVAX': '28285',  // Avalanche
+  'MATIC': '2462',  // Polygon
+  'SHIB': '28301',  // Shiba Inu
+  'LTC': '1',       // Litecoin
+  'UNI': '7083',    // Uniswap
+  'DOT': '6636',    // Polkadot
+  'VET': '1074',    // VeChain
+  'SUI': '29543',   // Sui
+  'XMR': '28',      // Monero
+  'ONT': '2566',    // Ontology
+  'XEM': '5',       // NEM
+  'QTUM': '1684',   // Qtum
+  'NPXS': '2603',   // Pundi X
+  'CELO': '5567',   // Celo
+  'PART': '1826',   // Particl
+  'KCS': '2087',    // KuCoin Shares
+  'BASE': '29743',  // Base
+  'DCR': '118',     // Decred
+  'QKC': '2840',    // QuarkChain
+  'DGB': '109',     // DigiByte
+  'BAT': '1697',    // Basic Attention Token
+  'HT': '2502',     // Huobi Token
+  'LSK': '134',     // Lisk
+  'USDT': '518',    // Tether
+  'ETC': '118',     // Ethereum Classic
+  'BTCP': '2575',   // Bitcoin Private
+  'ICX': '2099',    // ICON
+  'SYS': '119',     // Syscoin
+  'BCO': '1826',    // BridgeCoin
+  'SKY': '1619',    // Skycoin
+  'VTC': '99',      // Vertcoin
+  'NEBL': '1955',   // Neblio
+  'GBYTE': '1492',  // Byteball Bytes
+  'PPC': '5',       // Peercoin
+  'UBQ': '588',     // Ubiq
+  'ACT': '1817',    // Achain
+  'BAY': '1581',    // BitBay
+  'TPAY': '2679',   // TokenPay
 };
 
 // Map our fiat currencies to CoinGecko supported currencies
@@ -273,6 +361,50 @@ export class CryptoApiService {
       'BNB': 'Binance Coin',
       'SOL': 'Solana',
       'DOGE': 'Dogecoin',
+      'TRX': 'TRON',
+      'ADA': 'Cardano',
+      'DASH': 'Dash',
+      'LINK': 'Chainlink',
+      'BCH': 'Bitcoin Cash',
+      'XLM': 'Stellar',
+      'AVAX': 'Avalanche',
+      'MATIC': 'Polygon',
+      'SHIB': 'Shiba Inu',
+      'LTC': 'Litecoin',
+      'UNI': 'Uniswap',
+      'DOT': 'Polkadot',
+      'VET': 'VeChain',
+      'SUI': 'Sui',
+      'XMR': 'Monero',
+      'ONT': 'Ontology',
+      'XEM': 'NEM',
+      'QTUM': 'Qtum',
+      'NPXS': 'Pundi X',
+      'CELO': 'Celo',
+      'PART': 'Particl',
+      'KCS': 'KuCoin Shares',
+      'BASE': 'Base',
+      'DCR': 'Decred',
+      'QKC': 'QuarkChain',
+      'DGB': 'DigiByte',
+      'BAT': 'Basic Attention Token',
+      'HT': 'Huobi Token',
+      'LSK': 'Lisk',
+      'USDT': 'Tether',
+      'ETC': 'Ethereum Classic',
+      'BTCP': 'Bitcoin Private',
+      'ICX': 'ICON',
+      'SYS': 'Syscoin',
+      'BCO': 'BridgeCoin',
+      'SKY': 'Skycoin',
+      'VTC': 'Vertcoin',
+      'NEBL': 'Neblio',
+      'GBYTE': 'Byteball Bytes',
+      'PPC': 'Peercoin',
+      'UBQ': 'Ubiq',
+      'ACT': 'Achain',
+      'BAY': 'BitBay',
+      'TPAY': 'TokenPay',
     };
     
     return nameMap[symbol.toUpperCase()] || symbol.toUpperCase();
