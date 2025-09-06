@@ -234,7 +234,10 @@ const NotificationsModal: React.FC<NotificationsModalProps> = ({
           
           {/* Push Notification - EXACT FIGMA */}
           <div className="box-border flex gap-[17.997px] items-center justify-start px-0 py-[8.998px] relative shrink-0 w-full">
-            <div className="basis-0 flex flex-col grow items-start justify-start min-h-px min-w-px relative shrink-0">
+            <div 
+              className="basis-0 flex flex-col grow items-start justify-start min-h-px min-w-px relative shrink-0 cursor-pointer"
+              onClick={() => handleToggle('push')}
+            >
               <div className="font-jakarta font-medium text-[15.747px] leading-[26.995px] text-[#15171a] relative shrink-0">
                 Push Notification
               </div>
@@ -258,7 +261,10 @@ const NotificationsModal: React.FC<NotificationsModalProps> = ({
 
           {/* Email Notification - EXACT FIGMA */}
           <div className="box-border flex gap-[17.997px] items-center justify-start px-0 py-[8.998px] relative shrink-0 w-full">
-            <div className="basis-0 flex flex-col grow items-start justify-start min-h-px min-w-px relative shrink-0">
+            <div 
+              className="basis-0 flex flex-col grow items-start justify-start min-h-px min-w-px relative shrink-0 cursor-pointer"
+              onClick={() => handleToggle('email')}
+            >
               <div className="font-jakarta font-medium text-[15.747px] leading-[26.995px] text-[#15171a] relative shrink-0">
                 Email Notification
               </div>
@@ -282,7 +288,10 @@ const NotificationsModal: React.FC<NotificationsModalProps> = ({
 
           {/* SMS Notification - EXACT FIGMA */}
           <div className="box-border flex gap-[17.997px] items-center justify-start px-0 py-[8.998px] relative shrink-0 w-full">
-            <div className="basis-0 flex flex-col grow items-start justify-start min-h-px min-w-px relative shrink-0">
+            <div 
+              className="basis-0 flex flex-col grow items-start justify-start min-h-px min-w-px relative shrink-0 cursor-pointer"
+              onClick={() => handleToggle('sms')}
+            >
               <div className="font-jakarta font-medium text-[15.747px] leading-[26.995px] text-[#15171a] relative shrink-0">
                 SMS Notification
               </div>
