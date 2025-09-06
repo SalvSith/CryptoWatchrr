@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { assets } from '../assets/images';
 
 interface AlertData {
   id: string;
@@ -13,9 +12,10 @@ interface AlertData {
 
 interface MyAlertsProps {
   onCreateAlert: () => void;
+  onEditAlert: (alertData: AlertData) => void;
 }
 
-const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert }) => {
+const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert, onEditAlert }) => {
   const [alerts, setAlerts] = useState<AlertData[]>([
     {
       id: '1',
@@ -107,47 +107,56 @@ const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert }) => {
           {alerts.map((alert, index) => (
             <div key={alert.id}>
               <div className="flex items-center gap-[18px] py-[9px]">
-                {/* Crypto Icon */}
-                <div className="w-[45px] h-[45px] flex-shrink-0">
-                  <img 
-                    src={alert.icon} 
-                    alt={alert.symbol} 
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                </div>
-
-                {/* Alert Info */}
-                <div className="flex-1 min-w-0">
-                  {/* Top row - Name and Symbol */}
-                  <div className="flex items-center gap-[4px] mb-[2px]">
-                    <span className="font-jakarta font-medium text-[15.75px] text-[#15171a] leading-[27px]">
-                      {alert.name}
-                    </span>
-                    <div className="bg-[#f4f4f6] px-[4px] py-[2px] rounded-[45px] flex-shrink-0">
-                      <span className="font-jakarta font-normal text-[11px] text-[#15171a] leading-[22px]">
-                        {alert.symbol}
-                      </span>
-                    </div>
+                {/* Clickable Alert Content */}
+                <div 
+                  className="flex items-center gap-[18px] flex-1 cursor-pointer hover:bg-gray-50/50 rounded-lg px-2 py-1 -mx-2 -my-1 transition-colors"
+                  onClick={() => onEditAlert(alert)}
+                >
+                  {/* Crypto Icon */}
+                  <div className="w-[45px] h-[45px] flex-shrink-0">
+                    <img 
+                      src={alert.icon} 
+                      alt={alert.symbol} 
+                      className="w-full h-full rounded-full object-cover"
+                    />
                   </div>
 
-                  {/* Bottom row - Price and Alert Type */}
-                  <div className="flex items-center gap-[4px]">
-                    <span className="font-jakarta font-normal text-[13.5px] text-gray-500 leading-[25px]">
-                      {alert.price}
-                    </span>
-                    <span className="font-jakarta font-normal text-[13.5px] text-gray-500 leading-[25px]">
-                      |
-                    </span>
-                    <span className="font-jakarta font-semibold text-[13.5px] text-gray-500 leading-[25px]">
-                      {alert.alertType}
-                    </span>
+                  {/* Alert Info */}
+                  <div className="flex-1 min-w-0">
+                    {/* Top row - Name and Symbol */}
+                    <div className="flex items-center gap-[4px] mb-[2px]">
+                      <span className="font-jakarta font-medium text-[15.75px] text-[#15171a] leading-[27px]">
+                        {alert.name}
+                      </span>
+                      <div className="bg-[#f4f4f6] px-[4px] py-[2px] rounded-[45px] flex-shrink-0">
+                        <span className="font-jakarta font-normal text-[11px] text-[#15171a] leading-[22px]">
+                          {alert.symbol}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Bottom row - Price and Alert Type */}
+                    <div className="flex items-center gap-[4px]">
+                      <span className="font-jakarta font-normal text-[13.5px] text-gray-500 leading-[25px]">
+                        {alert.price}
+                      </span>
+                      <span className="font-jakarta font-normal text-[13.5px] text-gray-500 leading-[25px]">
+                        |
+                      </span>
+                      <span className="font-jakarta font-semibold text-[13.5px] text-gray-500 leading-[25px]">
+                        {alert.alertType}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
                 {/* Toggle Switch */}
                 <div className="flex-shrink-0">
                   <button
-                    onClick={() => toggleAlert(alert.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleAlert(alert.id);
+                    }}
                     className={`relative w-[46px] h-[25px] rounded-[50px] transition-colors duration-200 ease-in-out ${
                       alert.isEnabled ? 'bg-[#256bfd]' : 'bg-gray-300'
                     }`}

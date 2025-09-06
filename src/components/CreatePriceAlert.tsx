@@ -11,17 +11,34 @@ import CryptocurrencyModalExpanded from './CryptocurrencyModalExpanded';
 import AnimatedPrice from './AnimatedPrice';
 import CryptoIconExpanded, { CryptoCurrency } from './CryptoIconsExpanded';
 
-interface CreatePriceAlertProps {
-  onBack?: () => void;
+interface AlertData {
+  id: string;
+  name: string;
+  symbol: string;
+  icon: string;
+  price: string;
+  alertType: 'Once Off' | 'Recurring';
+  isEnabled: boolean;
 }
 
-const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
+interface CreatePriceAlertProps {
+  onBack?: () => void;
+  existingAlert?: AlertData | null;
+}
+
+const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAlert }) => {
   const [activeTab, setActiveTab] = useState<'fiat' | 'crypto'>('fiat');
-  const [alertPrice, setAlertPrice] = useState('112500.00');
+  const [alertPrice, setAlertPrice] = useState(() => {
+    if (existingAlert?.price) {
+      // Remove currency symbols and spaces, keep numbers and decimal points
+      return existingAlert.price.replace(/[^0-9.]/g, '');
+    }
+    return '112500.00';
+  });
   const [selectedPercentage, setSelectedPercentage] = useState<string | null>(null);
   const [isCustomPercentage, setIsCustomPercentage] = useState(false);
-  const [selectedCrypto, setSelectedCrypto] = useState('BTC');
-  const [alertName, setAlertName] = useState('Bitcoin');
+  const [selectedCrypto, setSelectedCrypto] = useState(existingAlert?.symbol || 'BTC');
+  const [alertName, setAlertName] = useState(existingAlert?.name || 'Bitcoin');
   const [isAlertNameModalOpen, setIsAlertNameModalOpen] = useState(false);
   const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
   const [isFrequencyModalOpen, setIsFrequencyModalOpen] = useState(false);
@@ -30,6 +47,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
   const [isFiatCurrencyModalOpen, setIsFiatCurrencyModalOpen] = useState(false);
   const [isCryptocurrencyModalOpen, setIsCryptocurrencyModalOpen] = useState(false);
   const [isPriceAnimating, setIsPriceAnimating] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
   
   // Fiat currency setting - defaults to USD
   const [selectedFiatCurrency, setSelectedFiatCurrency] = useState('USD');
@@ -39,16 +57,25 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
   const [isPriceLoading, setIsPriceLoading] = useState(false);
   const [priceError, setPriceError] = useState<string | null>(null);
   
-  // Notification settings - all off by default
-  const [pushNotifications, setPushNotifications] = useState(false);
-  const [emailNotifications, setEmailNotifications] = useState(false);
-  const [smsNotifications, setSmsNotifications] = useState(false);
+  // Notification settings - randomized for existing alerts, off by default for new alerts
+  const [pushNotifications, setPushNotifications] = useState(existingAlert ? Math.random() > 0.5 : false);
+  const [emailNotifications, setEmailNotifications] = useState(existingAlert ? Math.random() > 0.5 : false);
+  const [smsNotifications, setSmsNotifications] = useState(existingAlert ? Math.random() > 0.5 : false);
   
-  // Frequency setting - no default selection
-  const [frequency, setFrequency] = useState<'once' | 'recurring' | null>(null);
+  // Frequency setting - initialize from existing alert
+  const [frequency, setFrequency] = useState<'once' | 'recurring' | null>(
+    existingAlert?.alertType === 'Once Off' ? 'once' : 
+    existingAlert?.alertType === 'Recurring' ? 'recurring' : null
+  );
   
-  // Tone setting - no default selection
-  const [customTone, setCustomTone] = useState<string | null>(null);
+  // Tone setting - randomized for existing alerts, no default selection for new alerts
+  const [customTone, setCustomTone] = useState<string | null>(() => {
+    if (existingAlert) {
+      const tones = ['default', 'bubble-pop', 'bell-ding', 'cha-ching', 'alien-pulse', 'sonar', 'danger'];
+      return tones[Math.floor(Math.random() * tones.length)];
+    }
+    return null;
+  });
   
   // Computed values (after state declarations)
   const basePrice = currentPriceData?.currentPrice || 112500;
@@ -82,7 +109,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
     return 'text-xs'; // 12px
   };
 
-  // Validation function to check if all required settings are filled
+  // Validation function to check if all required settings are filled and changes made
   const areAllSettingsFilled = (): boolean => {
     // Check if alert name is set (should always be set, but just in case)
     if (!alertName.trim()) return false;
@@ -100,6 +127,9 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
     // Check if alert price is different from base price (meaning user has set a target)
     const numericPrice = parseFloat(alertPrice.replace(/[^0-9.]/g, ''));
     if (isNaN(numericPrice) || numericPrice === basePrice) return false;
+    
+    // For existing alerts, also check if changes have been made
+    if (existingAlert && !hasChanges) return false;
     
     return true;
   };
@@ -174,6 +204,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
     setPushNotifications(push);
     setEmailNotifications(email);
     setSmsNotifications(sms);
+    setHasChanges(true);
   };
 
   const getNotificationsDisplayText = (): string => {
@@ -190,6 +221,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
 
   const handleUpdateFrequency = (newFrequency: 'once' | 'recurring') => {
     setFrequency(newFrequency);
+    setHasChanges(true);
   };
 
   const getFrequencyDisplayText = (): string => {
@@ -199,6 +231,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
 
   const handleUpdateTone = (newTone: string) => {
     setCustomTone(newTone);
+    setHasChanges(true);
   };
 
   const handleUpdatePercentage = (newPercentage: string) => {
@@ -213,18 +246,21 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
       setAlertPrice(newPrice.toFixed(2));
       setSelectedPercentage(`${percentageValue > 0 ? '+' : ''}${percentageValue}%`);
       setIsCustomPercentage(true);
+      setHasChanges(true);
     }
   };
 
   const handleUpdateFiatCurrency = (currency: string) => {
     setSelectedFiatCurrency(currency);
     setIsFiatCurrencyModalOpen(false);
+    setHasChanges(true);
   };
 
   const handleUpdateCryptocurrency = (crypto: string) => {
     setSelectedCrypto(crypto);
     setAlertName(cryptocurrencies[crypto]?.name || crypto);
     setIsCryptocurrencyModalOpen(false);
+    setHasChanges(true);
   };
 
   // Function to fetch current price data
@@ -253,12 +289,34 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
     fetchCurrentPrice();
   }, [selectedCrypto, selectedFiatCurrency]);
 
-  // Update alert price when current price data changes
+  // Update alert price when current price data changes (only for new alerts, not when editing)
   useEffect(() => {
-    if (currentPriceData) {
+    if (currentPriceData && !existingAlert) {
       setAlertPrice(currentPriceData.currentPrice.toFixed(2));
     }
-  }, [currentPriceData]);
+  }, [currentPriceData, existingAlert]);
+
+  // Update form when existingAlert changes
+  useEffect(() => {
+    if (existingAlert) {
+      setAlertPrice(existingAlert.price.replace(/[^0-9.]/g, ''));
+      setSelectedCrypto(existingAlert.symbol);
+      setAlertName(existingAlert.name);
+      setFrequency(existingAlert.alertType === 'Once Off' ? 'once' : 'recurring');
+      
+      // Set randomized notification settings
+      setPushNotifications(Math.random() > 0.5);
+      setEmailNotifications(Math.random() > 0.5);
+      setSmsNotifications(Math.random() > 0.5);
+      
+      // Set randomized custom tone
+      const tones = ['default', 'bubble-pop', 'bell-ding', 'cha-ching', 'alien-pulse', 'sonar', 'danger'];
+      setCustomTone(tones[Math.floor(Math.random() * tones.length)]);
+      
+      // Reset changes flag when loading existing alert
+      setHasChanges(false);
+    }
+  }, [existingAlert]);
 
   const getToneDisplayText = (): string => {
     if (customTone === null) return 'Select';
@@ -280,6 +338,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
     // Clear selected percentage when manually typing
     setSelectedPercentage(null);
     setIsCustomPercentage(false);
+    setHasChanges(true);
   };
 
   const applyPercentage = (percentage: number) => {
@@ -300,6 +359,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
       setAlertPrice(newPrice.toFixed(2));
       setSelectedPercentage(percentageString);
       setIsCustomPercentage(false);
+      setHasChanges(true);
     }
   };
 
@@ -319,9 +379,9 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
                 <img src={assets.iconArrowLeft} alt="Back" className="w-27 h-27" />
               </button>
             </div>
-            <h1 className="font-jakarta font-medium text-lg text-text-black">
-              Create Price Alert
-            </h1>
+              <h1 className="font-jakarta font-medium text-lg text-text-black">
+                {existingAlert ? 'Edit Price Alert' : 'Create Price Alert'}
+              </h1>
             <div className="w-[62px]"></div>
           </div>
         </div>
@@ -564,8 +624,8 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
                 : 'bg-button-disabled text-white cursor-not-allowed opacity-60'
             }`}
             disabled={!areAllSettingsFilled()}
-          >
-            Set price alert
+            >
+            {existingAlert ? 'Save changes' : 'Set price alert'}
           </button>
         </div>
       </div>
@@ -575,7 +635,10 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
         isOpen={isAlertNameModalOpen}
         onClose={() => setIsAlertNameModalOpen(false)}
         currentName={alertName}
-        onConfirm={(name) => setAlertName(name)}
+        onConfirm={(name) => {
+          setAlertName(name);
+          setHasChanges(true);
+        }}
       />
 
       {/* Notifications Modal */}
