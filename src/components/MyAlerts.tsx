@@ -88,7 +88,7 @@ const MyAlerts: React.FC<MyAlertsProps> = ({ onCreateAlert }) => {
       <div className="relative z-10">
         {/* Header */}
         <div className="flex items-center justify-between h-[56px] px-[18px] py-[9px] bg-[#fbfbfb]/95 backdrop-blur-sm sticky top-0">
-          <button className="p-[9px] -m-[9px] hover:bg-gray-100/50 rounded-lg transition-colors">
+          <button className="p-[9px] -m-[9px]">
             <img src="/assets/icon-arrow-left.svg" alt="Back" className="w-[27px] h-[27px]" />
           </button>
           <h1 className="font-jakarta font-medium text-[18px] text-[#15171a] leading-[29px]">
