@@ -182,6 +182,8 @@ const ToneModal: React.FC<ToneModalProps> = ({
 
   const handleToneSelect = (toneId: string) => {
     setLocalTone(toneId);
+    // Close modal after selection
+    closeModal();
   };
 
   const handlePlayTone = (fileName: string, toneId: string) => {
@@ -301,7 +303,10 @@ const ToneModal: React.FC<ToneModalProps> = ({
                 </button>
                 
                 {/* Tone Name - EXACT FIGMA */}
-                <div className="font-jakarta font-medium text-[15.747px] leading-[26.995px] text-[#15171a] relative shrink-0">
+                <div 
+                  className="font-jakarta font-medium text-[15.747px] leading-[26.995px] text-[#15171a] relative shrink-0 cursor-pointer"
+                  onClick={() => handleToneSelect(tone.id)}
+                >
                   {tone.name}
                 </div>
               </div>
