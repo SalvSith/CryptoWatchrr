@@ -182,7 +182,8 @@ const ToneModal: React.FC<ToneModalProps> = ({
 
   const handleToneSelect = (toneId: string) => {
     setLocalTone(toneId);
-    // Close modal after selection
+    // Update parent immediately and close modal
+    onUpdateTone(toneId);
     closeModal();
   };
 

@@ -156,7 +156,8 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
 
   const handleFrequencySelect = (frequency: 'once' | 'recurring') => {
     setLocalFrequency(frequency);
-    // Close modal after selection
+    // Update parent immediately and close modal
+    onUpdateFrequency(frequency);
     closeModal();
   };
 
