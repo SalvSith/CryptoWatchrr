@@ -503,10 +503,10 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
       return (
         <div className="overflow-clip relative rounded-full" style={iconStyle}>
           <div className="absolute inset-0">
-            <img alt="Avalanche background" className="block max-w-none size-full" src="/assets/avalanche-bg.svg" />
+            <img alt="Avalanche background" className="block max-w-none size-full" src="/assets/avalanche-bg-new.svg" />
           </div>
-          <div className="absolute inset-[16.67%_24.44%_16.67%_20.83%]">
-            <img alt="Avalanche icon" className="block max-w-none size-full" src="/assets/avalanche-group.svg" />
+          <div className="absolute inset-[16.67%_16.67%_24.07%_16.67%]">
+            <img alt="Avalanche icon" className="block max-w-none size-full" src="/assets/avalanche-group-new.svg" />
           </div>
         </div>
       );
