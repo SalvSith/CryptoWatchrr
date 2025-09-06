@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
+import CryptoIcon from './CryptoIcons';
 
 interface Cryptocurrency {
-  id: string;
+  id: 'BTC' | 'ETH' | 'XRP' | 'BNB' | 'SOL' | 'DOGE';
   name: string;
   code: string;
-  icon: string;
 }
 
 interface CryptocurrencyModalProps {
@@ -15,12 +15,12 @@ interface CryptocurrencyModalProps {
 }
 
 const cryptocurrencies: Cryptocurrency[] = [
-  { id: 'BTC', name: 'Bitcoin', code: 'BTC', icon: '/assets/btc-icon.svg' },
-  { id: 'ETH', name: 'Ethereum', code: 'ETH', icon: '/assets/eth-icon.svg' },
-  { id: 'XRP', name: 'Ripple', code: 'XRP', icon: '/assets/xrp-icon.svg' },
-  { id: 'BNB', name: 'Binance Coin', code: 'BNB', icon: '/assets/bnb-icon.svg' },
-  { id: 'SOL', name: 'Solana', code: 'SOL', icon: '/assets/sol-icon.svg' },
-  { id: 'DOGE', name: 'Dogecoin', code: 'DOGE', icon: '/assets/doge-icon.svg' },
+  { id: 'BTC', name: 'Bitcoin', code: 'BTC' },
+  { id: 'ETH', name: 'Ethereum', code: 'ETH' },
+  { id: 'XRP', name: 'Ripple', code: 'XRP' },
+  { id: 'BNB', name: 'Binance Coin', code: 'BNB' },
+  { id: 'SOL', name: 'Solana', code: 'SOL' },
+  { id: 'DOGE', name: 'Dogecoin', code: 'DOGE' },
 ];
 
 const CryptocurrencyModal: React.FC<CryptocurrencyModalProps> = ({
@@ -218,8 +218,8 @@ const CryptocurrencyModal: React.FC<CryptocurrencyModalProps> = ({
                 role="button"
               >
                 <div className="content-stretch flex gap-[17.997px] items-center justify-start relative shrink-0">
-                  <div className="relative shrink-0 size-[44.992px]">
-                    <img src={crypto.icon} alt={crypto.code} className="w-full h-full object-cover rounded-full" />
+                  <div className="relative shrink-0" style={{ width: '44.99px', height: '44.99px' }}>
+                    <CryptoIcon currency={crypto.id} size={44.99} />
                   </div>
                   <div className="font-jakarta font-medium text-[15.747px] leading-[26.995px] text-[#15171a] relative shrink-0 text-left">
                     <span>{crypto.name} </span>

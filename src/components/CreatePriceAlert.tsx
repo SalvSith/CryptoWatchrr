@@ -9,6 +9,7 @@ import PercentModal from './PercentModal';
 import FiatCurrencyModal from './FiatCurrencyModal';
 import CryptocurrencyModal from './CryptocurrencyModal';
 import AnimatedPrice from './AnimatedPrice';
+import CryptoIcon from './CryptoIcons';
 
 interface CreatePriceAlertProps {
   onBack?: () => void;
@@ -393,7 +394,9 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
                   onClick={() => setIsCryptocurrencyModalOpen(true)}
                   className="flex items-center gap-[7px] hover:bg-gray-50 px-2 py-1 rounded-lg transition-colors absolute right-[-16px]"
                 >
-                  <img src={cryptocurrencies[selectedCrypto]?.icon || assets.btcIcon} alt={selectedCrypto} className="w-[30px] h-[30px] rounded-full" />
+                  <div className="w-[30px] h-[30px]">
+                    <CryptoIcon currency={selectedCrypto as 'BTC' | 'ETH' | 'XRP' | 'BNB' | 'SOL' | 'DOGE'} size={30} />
+                  </div>
                   <span className="font-jakarta font-medium text-sm text-gray-500">{selectedCrypto}</span>
                   <img src={assets.chevronSmallRight} alt=">" className="w-[16px] h-[24px]" />
                 </button>
