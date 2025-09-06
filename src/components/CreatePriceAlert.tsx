@@ -58,24 +58,24 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAle
   const [isPriceLoading, setIsPriceLoading] = useState(false);
   const [priceError, setPriceError] = useState<string | null>(null);
   
-  // Notification settings - randomized for existing alerts, off by default for new alerts
-  const [pushNotifications, setPushNotifications] = useState(existingAlert ? Math.random() > 0.5 : false);
+  // Notification settings - randomized for existing alerts, Push enabled by default for new alerts
+  const [pushNotifications, setPushNotifications] = useState(existingAlert ? Math.random() > 0.5 : true);
   const [emailNotifications, setEmailNotifications] = useState(existingAlert ? Math.random() > 0.5 : false);
   const [smsNotifications, setSmsNotifications] = useState(existingAlert ? Math.random() > 0.5 : false);
   
-  // Frequency setting - initialize from existing alert
+  // Frequency setting - initialize from existing alert, default to 'once' for new alerts
   const [frequency, setFrequency] = useState<'once' | 'recurring' | null>(
     existingAlert?.alertType === 'Once Off' ? 'once' : 
-    existingAlert?.alertType === 'Recurring' ? 'recurring' : null
+    existingAlert?.alertType === 'Recurring' ? 'recurring' : 'once'
   );
   
-  // Tone setting - randomized for existing alerts, no default selection for new alerts
+  // Tone setting - randomized for existing alerts, default tone for new alerts
   const [customTone, setCustomTone] = useState<string | null>(() => {
     if (existingAlert) {
       const tones = ['default', 'bubble-pop', 'bell-ding', 'cha-ching', 'alien-pulse', 'sonar', 'danger'];
       return tones[Math.floor(Math.random() * tones.length)];
     }
-    return null;
+    return 'default';
   });
   
   // Computed values (after state declarations)
