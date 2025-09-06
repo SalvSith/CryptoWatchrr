@@ -208,7 +208,7 @@ const CryptocurrencyModalExpanded: React.FC<CryptocurrencyModalProps> = ({
     >
       <div
         ref={modalRef}
-        className={`bg-[#fbfbfb] flex flex-col items-start justify-start overflow-hidden relative rounded-[21.371px] w-full max-w-[420.67px] mx-4 mb-6 transition-transform duration-300 ease-out touch-none select-none ${
+        className={`bg-[#fbfbfb] flex flex-col items-start justify-start overflow-hidden relative rounded-[21.371px] w-[421px] mx-4 mb-6 transition-transform duration-300 ease-out touch-none select-none ${
           isDragging ? 'transition-none cursor-grabbing' : 'cursor-grab'
         }`}
         style={{
@@ -253,8 +253,8 @@ const CryptocurrencyModalExpanded: React.FC<CryptocurrencyModalProps> = ({
         </div>
 
         {/* Content Section - Scrollable */}
-        <div className="flex-1 overflow-y-auto px-[17.997px] pb-[17.997px]">
-          <div className="flex flex-col gap-[8.998px] items-start justify-start w-full">
+        <div className="flex-1 overflow-y-auto px-[18px] pb-[17.997px]">
+          <div className="flex flex-col gap-[8.998px] items-start justify-start w-[385.007px]">
             {cryptocurrencies.map((crypto) => (
               <button
                 key={crypto.id}
@@ -277,15 +277,14 @@ const CryptocurrencyModalExpanded: React.FC<CryptocurrencyModalProps> = ({
                     )}
                   </div>
                 </div>
-                <div className="content-stretch flex gap-[8.998px] items-center justify-start relative shrink-0">
+                <div className="flex items-center justify-start relative shrink-0">
                   <div className="relative shrink-0 size-[22.496px]">
-                    <div className="absolute left-[-12.37px] size-[22.496px] top-0" />
                     {localSelectedCryptocurrency === crypto.id ? (
-                      <div className="absolute bg-[#256bfd] left-1/2 rounded-[6px] size-[22.496px] top-0 translate-x-[-50%] flex items-center justify-center">
+                      <div className="bg-[#256bfd] rounded-[6px] size-[22.496px] flex items-center justify-center">
                         <img src="/assets/checkmark.svg" alt="Selected" className="w-[15.658px] h-[12.684px]" />
                       </div>
                     ) : (
-                      <div className="absolute rounded-[6px] size-[22.496px] border border-[#e1e3e6] left-1/2 top-0 translate-x-[-50%]" />
+                      <div className="rounded-[6px] size-[22.496px] border border-[#e1e3e6]" />
                     )}
                   </div>
                 </div>
