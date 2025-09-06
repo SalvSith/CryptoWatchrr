@@ -376,6 +376,129 @@ const CryptoIconExpanded: React.FC<CryptoIconProps> = ({ currency, size = 44.99 
         </div>
       );
 
+    case 'BASE':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Base background" className="block max-w-none size-full" src="/assets/base-bg.svg" />
+          </div>
+          <div className="absolute inset-[16.667%]">
+            <img alt="Base ellipse" className="block max-w-none size-full" width="29.993" height="29.993" src="/assets/base-ellipse.png" />
+          </div>
+        </div>
+      );
+
+    case 'DCR':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Decred background" className="block max-w-none size-full" src="/assets/decred-bg.svg" />
+          </div>
+          <div className="absolute inset-[29.17%_18.52%_25.7%_20.83%]">
+            <img alt="Decred icon" className="block max-w-none size-full" src="/assets/decred-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'QKC':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Quarkchain background" className="block max-w-none size-full" src="/assets/quarkchain-bg.svg" />
+          </div>
+          <div className="absolute inset-[16.667%]">
+            <img alt="Quarkchain icon" className="block max-w-none size-full" src="/assets/quarkchain-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'DGB':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="DigiByte background" className="block max-w-none size-full" src="/assets/digibyte-bg.svg" />
+          </div>
+          <div className="absolute inset-[20.83%_20.83%_22.51%_20.83%]">
+            <img alt="DigiByte icon" className="block max-w-none size-full" src="/assets/digibyte-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'BAT':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Basic Attention Token background" className="block max-w-none size-full" src="/assets/bat-bg.svg" />
+          </div>
+          <div className="absolute inset-[12.5%_16.67%_25.28%_16.67%]">
+            <img alt="Basic Attention Token icon" className="block max-w-none size-full" src="/assets/bat-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'HT':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Huobi background" className="block max-w-none size-full" src="/assets/huobi-bg.svg" />
+          </div>
+          <div className="absolute inset-[16.67%_43.38%_20.59%_29.17%]">
+            <img alt="Huobi dark" className="block max-w-none size-full" src="/assets/huobi-dark.svg" />
+          </div>
+          <div className="absolute inset-[44.12%_31.62%_16.67%_48.77%]">
+            <img alt="Huobi blue" className="block max-w-none size-full" src="/assets/huobi-blue.svg" />
+          </div>
+        </div>
+      );
+
+    case 'LSK':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="LISK background" className="block max-w-none size-full" src="/assets/lisk-bg.svg" />
+          </div>
+          <div className="absolute inset-[16.67%_22%_16.67%_20.83%]">
+            <img alt="LISK icon" className="block max-w-none size-full" src="/assets/lisk-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'ICX':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="ICON background" className="block max-w-none size-full" src="/assets/icon-bg.svg" />
+          </div>
+          <div className="absolute bottom-1/4 left-[20.83%] right-[17.63%] top-1/4">
+            <img alt="ICON icon" className="block max-w-none size-full" src="/assets/icon-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'SYS':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="Syscoin background" className="block max-w-none size-full" src="/assets/syscoin-bg.svg" />
+          </div>
+          <div className="absolute inset-[33.33%_14.13%_32.07%_16.67%]">
+            <img alt="Syscoin icon" className="block max-w-none size-full" src="/assets/syscoin-group.svg" />
+          </div>
+        </div>
+      );
+
+    case 'BCO':
+      return (
+        <div className="overflow-clip relative rounded-full" style={iconStyle}>
+          <div className="absolute inset-0">
+            <img alt="BridgeCoin background" className="block max-w-none size-full" src="/assets/bridgecoin-bg.svg" />
+          </div>
+          <div className="absolute inset-[16.67%_17.63%_14.1%_20.83%]">
+            <img alt="BridgeCoin icon" className="block max-w-none size-full" src="/assets/bridgecoin-group.svg" />
+          </div>
+        </div>
+      );
+
     // For cryptocurrencies not yet implemented, use a generic placeholder
     // This will be expanded as more assets are downloaded
     default:
