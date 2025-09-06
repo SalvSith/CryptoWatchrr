@@ -467,7 +467,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAle
             <div className="bg-bg-gray px-13.5 py-9 rounded-card">
               <div className="flex items-center justify-between mb-1">
                 <p className="font-jakarta font-medium text-xs text-text-dark">
-                  Set Alert At:
+                  Set At:
                 </p>
                 <div className="flex gap-4.5 flex-wrap min-w-0">
                   {['-5%', '+5%', '+10%'].map((percent) => (
