@@ -24,7 +24,6 @@ const ToneModal: React.FC<ToneModalProps> = ({
   // Local state for selection
   const [localTone, setLocalTone] = useState<string | null>(selectedTone);
   const [playingTone, setPlayingTone] = useState<string | null>(null);
-  const [hasUpdatedParent, setHasUpdatedParent] = useState(false);
 
   const startYRef = useRef(0);
   const currentYRef = useRef(0);
@@ -49,7 +48,6 @@ const ToneModal: React.FC<ToneModalProps> = ({
       // Reset drag state when opening
       setDragY(0);
       setIsDragging(false);
-      setHasUpdatedParent(false); // Reset update flag when opening
       // Sync local state with props when modal opens
       console.log('Modal opening, syncing localTone with selectedTone:', selectedTone);
       setLocalTone(selectedTone);
@@ -155,7 +153,7 @@ const ToneModal: React.FC<ToneModalProps> = ({
     setIsDragging(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (skipUpdate = false) => {
     setIsVisible(false);
     // Stop any playing audio
     if (audioRef.current) {
@@ -165,10 +163,14 @@ const ToneModal: React.FC<ToneModalProps> = ({
     setPlayingTone(null);
     // Wait for slide-out animation to complete before calling onClose
     setTimeout(() => {
+      console.log('closeModal setTimeout - localTone:', localTone, 'skipUpdate:', skipUpdate);
       onClose();
-      // Apply changes when modal closes (only if a selection was made and we haven't already updated)
-      if (localTone !== null && !hasUpdatedParent) {
+      // Apply changes when modal closes (only if a selection was made and we should update)
+      if (localTone !== null && !skipUpdate) {
+        console.log('closeModal calling onUpdateTone with:', localTone);
         onUpdateTone(localTone);
+      } else {
+        console.log('closeModal skipping update - skipUpdate:', skipUpdate, 'localTone:', localTone);
       }
     }, 300);
   };
@@ -186,8 +188,8 @@ const ToneModal: React.FC<ToneModalProps> = ({
     // Update parent immediately and close modal
     console.log('Calling onUpdateTone with:', toneId);
     onUpdateTone(toneId);
-    setHasUpdatedParent(true); // Mark that we've already updated the parent
-    closeModal();
+    // Close modal and skip the delayed update since we already updated immediately
+    closeModal(true);
   };
 
   const handlePlayTone = (fileName: string, toneId: string) => {

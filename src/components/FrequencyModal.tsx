@@ -22,7 +22,6 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
   
   // Local state for selection
   const [localFrequency, setLocalFrequency] = useState<'once' | 'recurring' | null>(selectedFrequency);
-  const [hasUpdatedParent, setHasUpdatedParent] = useState(false);
 
   const startYRef = useRef(0);
   const currentYRef = useRef(0);
@@ -35,7 +34,6 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
       // Reset drag state when opening
       setDragY(0);
       setIsDragging(false);
-      setHasUpdatedParent(false); // Reset update flag when opening
       // Sync local state with props when modal opens
       console.log('Modal opening, syncing localFrequency with selectedFrequency:', selectedFrequency);
       setLocalFrequency(selectedFrequency);
@@ -135,14 +133,18 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
     setIsDragging(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (skipUpdate = false) => {
     setIsVisible(false);
     // Wait for slide-out animation to complete before calling onClose
     setTimeout(() => {
+      console.log('closeModal setTimeout - localFrequency:', localFrequency, 'skipUpdate:', skipUpdate);
       onClose();
-      // Apply changes when modal closes (only if a selection was made and we haven't already updated)
-      if (localFrequency !== null && !hasUpdatedParent) {
+      // Apply changes when modal closes (only if a selection was made and we should update)
+      if (localFrequency !== null && !skipUpdate) {
+        console.log('closeModal calling onUpdateFrequency with:', localFrequency);
         onUpdateFrequency(localFrequency);
+      } else {
+        console.log('closeModal skipping update - skipUpdate:', skipUpdate, 'localFrequency:', localFrequency);
       }
     }, 300);
   };
@@ -160,8 +162,8 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
     // Update parent immediately and close modal
     console.log('Calling onUpdateFrequency with:', frequency);
     onUpdateFrequency(frequency);
-    setHasUpdatedParent(true); // Mark that we've already updated the parent
-    closeModal();
+    // Close modal and skip the delayed update since we already updated immediately
+    closeModal(true);
   };
 
   if (!isOpen) return null;
