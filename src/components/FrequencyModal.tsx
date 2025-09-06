@@ -6,8 +6,8 @@ const checkmarkIcon = "/assets/checkmark.svg";
 interface FrequencyModalProps {
   isOpen: boolean;
   onClose: () => void;
-  selectedFrequency: 'once' | 'recurring' | null;
-  onUpdateFrequency: (frequency: 'once' | 'recurring') => void;
+  selectedFrequency: 'once' | 'daily' | 'recurring' | null;
+  onUpdateFrequency: (frequency: 'once' | 'daily' | 'recurring') => void;
 }
 
 const FrequencyModal: React.FC<FrequencyModalProps> = ({
@@ -21,7 +21,7 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   
   // Local state for selection
-  const [localFrequency, setLocalFrequency] = useState<'once' | 'recurring' | null>(selectedFrequency);
+  const [localFrequency, setLocalFrequency] = useState<'once' | 'daily' | 'recurring' | null>(selectedFrequency);
 
   const startYRef = useRef(0);
   const currentYRef = useRef(0);
@@ -156,7 +156,7 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
     }
   };
 
-  const handleFrequencySelect = (frequency: 'once' | 'recurring') => {
+  const handleFrequencySelect = (frequency: 'once' | 'daily' | 'recurring') => {
     console.log('handleFrequencySelect called with:', frequency);
     setLocalFrequency(frequency);
     // Update parent immediately and close modal
@@ -178,7 +178,7 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
       {/* Modal - EXACT FIGMA */}
       <div
         ref={modalRef}
-        className={`bg-[#fbfbfb] flex flex-col items-start justify-start overflow-hidden relative rounded-[21.371px] w-full max-w-[420.67px] mx-4 mb-6 transition-transform duration-300 ease-out touch-none select-none ${
+        className={`bg-[#fbfbfb] flex flex-col items-start justify-start overflow-hidden relative rounded-[21.371px] w-full max-w-[421px] mx-4 mb-6 transition-transform duration-300 ease-out touch-none select-none ${
           isDragging ? 'transition-none cursor-grabbing' : 'cursor-grab'
         }`}
         style={{
@@ -238,7 +238,7 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
             >
               <div className="font-jakarta font-medium text-[15.747px] leading-[26.995px] text-[#15171a] relative shrink-0">
                 <span>Alert me once</span>
-                <span className="font-jakarta font-normal text-gray-500"> (Once-off)</span>
+                <span className="font-jakarta font-normal text-gray-500"> (Only-once)</span>
               </div>
               <div className="flex gap-[8.998px] items-center justify-start relative shrink-0">
                 <div className={`relative shrink-0 w-[22.496px] h-[22.496px] rounded-[6px] transition-all duration-200 ${
@@ -247,6 +247,40 @@ const FrequencyModal: React.FC<FrequencyModalProps> = ({
                     : 'border border-[#e1e3e6]'
                 }`}>
                   {localFrequency === 'once' && (
+                    <div className="absolute flex h-[12.684px] items-center justify-center left-[3.37px] top-[5.62px] w-[15.658px]">
+                      <div className="flex-none rotate-[7.488deg]">
+                        <div className="h-[10.916px] relative w-[14.379px]">
+                          <img 
+                            alt="checkmark" 
+                            className="block max-w-none size-full" 
+                            src={checkmarkIcon} 
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </button>
+
+            {/* Alert me daily - NEW OPTION */}
+            <button
+              role="checkbox"
+              aria-checked={localFrequency === 'daily'}
+              onClick={() => handleFrequencySelect('daily')}
+              className="box-border flex items-center justify-between px-0 py-[8.998px] relative shrink-0 w-full hover:bg-gray-50 rounded-lg transition-colors cursor-pointer"
+            >
+              <div className="font-jakarta font-medium text-[15.747px] leading-[26.995px] text-[#15171a] relative shrink-0">
+                <span>Alert me daily</span>
+                <span className="font-jakarta font-normal text-gray-500"> (Once per day)</span>
+              </div>
+              <div className="flex gap-[8.998px] items-center justify-start relative shrink-0">
+                <div className={`relative shrink-0 w-[22.496px] h-[22.496px] rounded-[6px] transition-all duration-200 ${
+                  localFrequency === 'daily' 
+                    ? 'bg-[#256bfd]' 
+                    : 'border border-[#e1e3e6]'
+                }`}>
+                  {localFrequency === 'daily' && (
                     <div className="absolute flex h-[12.684px] items-center justify-center left-[3.37px] top-[5.62px] w-[15.658px]">
                       <div className="flex-none rotate-[7.488deg]">
                         <div className="h-[10.916px] relative w-[14.379px]">

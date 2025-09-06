@@ -64,7 +64,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAle
   const [smsNotifications, setSmsNotifications] = useState(existingAlert ? Math.random() > 0.5 : false);
   
   // Frequency setting - initialize from existing alert, default to 'once' for new alerts
-  const [frequency, setFrequency] = useState<'once' | 'recurring' | null>(
+  const [frequency, setFrequency] = useState<'once' | 'daily' | 'recurring' | null>(
     existingAlert?.alertType === 'Once Off' ? 'once' : 
     existingAlert?.alertType === 'Recurring' ? 'recurring' : 'once'
   );
@@ -220,7 +220,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAle
     return activeNotifications.join(', ').replace(/, ([^,]*)$/, ' & $1'); // "Push, Email & SMS"
   };
 
-  const handleUpdateFrequency = (newFrequency: 'once' | 'recurring') => {
+  const handleUpdateFrequency = (newFrequency: 'once' | 'daily' | 'recurring') => {
     console.log('handleUpdateFrequency called with:', newFrequency);
     setFrequency(newFrequency);
     setHasChanges(true);
@@ -228,7 +228,9 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack, existingAle
 
   const getFrequencyDisplayText = (): string => {
     if (frequency === null) return 'Select';
-    return frequency === 'once' ? 'Once-off' : 'Recurring';
+    if (frequency === 'once') return 'Only-once';
+    if (frequency === 'daily') return 'Once per day';
+    return 'Recurring';
   };
 
   const handleUpdateTone = (newTone: string) => {
