@@ -7,9 +7,9 @@ import FrequencyModal from './FrequencyModal';
 import ToneModal from './ToneModal';
 import PercentModal from './PercentModal';
 import FiatCurrencyModal from './FiatCurrencyModal';
-import CryptocurrencyModal from './CryptocurrencyModal';
+import CryptocurrencyModalExpanded from './CryptocurrencyModalExpanded';
 import AnimatedPrice from './AnimatedPrice';
-import CryptoIcon from './CryptoIcons';
+import CryptoIconExpanded, { CryptoCurrency } from './CryptoIconsExpanded';
 
 interface CreatePriceAlertProps {
   onBack?: () => void;
@@ -395,7 +395,7 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
                   className="flex items-center gap-[7px] hover:bg-gray-50 px-2 py-1 rounded-lg transition-colors absolute right-[-16px]"
                 >
                   <div className="w-[30px] h-[30px]">
-                    <CryptoIcon currency={selectedCrypto as 'BTC' | 'ETH' | 'XRP' | 'BNB' | 'SOL' | 'DOGE'} size={30} />
+                    <CryptoIconExpanded currency={selectedCrypto as CryptoCurrency} size={30} />
                   </div>
                   <span className="font-jakarta font-medium text-sm text-gray-500">{selectedCrypto}</span>
                   <img src={assets.chevronSmallRight} alt=">" className="w-[16px] h-[24px]" />
@@ -620,13 +620,13 @@ const CreatePriceAlert: React.FC<CreatePriceAlertProps> = ({ onBack }) => {
         onUpdateCurrency={handleUpdateFiatCurrency}
       />
 
-      {/* Cryptocurrency Modal */}
-      <CryptocurrencyModal
-        isOpen={isCryptocurrencyModalOpen}
-        onClose={() => setIsCryptocurrencyModalOpen(false)}
-        selectedCryptocurrency={selectedCrypto}
-        onUpdateCryptocurrency={handleUpdateCryptocurrency}
-      />
+        {/* Cryptocurrency Modal */}
+        <CryptocurrencyModalExpanded
+          isOpen={isCryptocurrencyModalOpen}
+          onClose={() => setIsCryptocurrencyModalOpen(false)}
+          selectedCryptocurrency={selectedCrypto}
+          onUpdateCryptocurrency={handleUpdateCryptocurrency}
+        />
     </div>
   );
 };
